@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Container do formulário de login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    
+}
+
+/* Cartão do formulário de login */
+.login-card {
+    background-color: rgb(255, 255, 255);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 500px; 
+    min-height: 500px; 
+}
+
+/* Logo no login */
+.login-logo {
+    width: 8rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Título "Bem-vindo de volta!" */
+.login-titulo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Inputs no login */
+.login-input-group {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+
+.login-input-label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.2rem;
+    display: block;
+}
+
+.login-input-field {
+    width: 100%;
+    max-width: 400px; 
+    padding: 12px 15px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background-color: white;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.login-input-field:focus {
+    border-color: #fbbf24;
+    box-shadow: 0 0 5px rgba(250, 191, 36, 0.5);
+}
+
+.login-input-field::placeholder {
+    font-style: italic;
+    font-size: 14px;
+    color: #888;
+}
+
+/* Link "Esqueci minha senha" no login */
+.login-esqueci-senha p {
+    font-size: 14px;
+    font-style: italic;
+    color: #333;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.login-esqueci-senha a {
+    color: #333;
+    text-decoration: none;
+}
+
+.login-esqueci-senha a:hover {
+    text-decoration: underline;
+}
+
+/* Botão de ENTRAR no login */
+.login-submit-btn {
+    width: 100%;
+    background-color: #ffde59;
+    border: none;
+    border-radius: 8px;
+    color: #292626;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.login-submit-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Link "Cadastre-se aqui!" no login */
+.login-cadastro-label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 1rem;
+}
+
+.login-cadastro-label a {
+    color: #292626;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-cadastro-label a:hover {
+    text-decoration: underline;
+}
+
+/* Melhor responsividade */
+@media (max-width: 400px) {
+    .login-card {
+        padding: 1.5rem;
+    }
+}

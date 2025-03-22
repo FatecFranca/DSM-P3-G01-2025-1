@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Container do formulário */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Cartão do formulário */
+.form-card {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 600px; /* Aumentei a largura máxima */
+    min-height: 500px;
+}
+
+/* Logo centralizada com espaçamento */
+.logo {
+    width: 10rem;
+    margin-bottom: 2rem;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Título "Seja bem-vindo!" */
+.titulo-bemvindo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* Container para as linhas do formulário */
+.form-row {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+/* Ajuste para os grupos de input */
+.input-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Rótulos dos campos */
+.input-label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    display: block;
+    text-align: left;
+}
+
+/* Inputs com bordas finas e arredondadas */
+.input-field {
+    width: 100%;
+    padding: 12px 15px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background-color: white;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.input-field:focus {
+    border-color: #fbbf24;
+    box-shadow: 0 0 5px rgba(250, 191, 36, 0.5);
+}
+
+.input-field::placeholder {
+    font-style: italic;
+    font-size: 14px;
+    color: #888;
+}
+
+/* Botão de CADASTRAR */
+.btn-submit {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffde59;
+    border: none;
+    border-radius: 8px;
+    color: #292626;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.btn-submit:hover {
+    transform: scale(1.05);
+}
+
+/* Melhor responsividade */
+@media (max-width: 400px) {
+    .form-card {
+        padding: 1.5rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
