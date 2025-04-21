@@ -5,7 +5,8 @@ import Home from '../src/pages/Home/Home.js';
 import LiteraturaBrasileira from '../src/pages/LiteraturaBrasileira/LiteraturaBrasileira.js';
 import Sobre from '../src/pages/Sobre/Sobre.js';
 import 'flowbite/dist/flowbite.css';
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import './index.css'; 
 
 

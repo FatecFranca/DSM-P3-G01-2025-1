@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Destaque from '../../assets/images/bannerHome.png';
 import '../../pages/Home/Home.css';
 import Footer from '../../components/Footer/Footer.js';
