@@ -25,6 +25,14 @@ const Cadastro = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const adminEmails = [
+        'anajuliaalvesmota@gmail.com',
+        'lauanegabtoledo@gmail.com',
+        'miguelsoares3005@gmail.com',
+        'gabrielferrarez77@gmail.com',
+        'pedrohcsilva77@gmail.com'
+    ];
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         
@@ -72,7 +80,15 @@ const Cadastro = () => {
           setError('As senhas não coincidem');
           return;
         }
-      
+
+        let isAdmin = false;
+        if (adminEmails.includes(formData.email)) {
+            isAdmin = true;
+
+                    } else {
+            isAdmin = false;
+        }
+
         setIsSubmitting(true);
       
         try {
