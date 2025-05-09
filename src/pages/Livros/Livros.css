@@ -1,0 +1,85 @@
+.livros-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 6rem;
+  }
+  
+  .img-destaque {
+      display: flex;
+      justify-content: center; 
+      align-items: center;
+      margin-bottom: 5%;
+      margin-top: 3%;
+    }
+    
+    .destaque {
+      width: 100%; 
+      max-width: 1200px; 
+      border-radius: 10px; 
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); 
+      transition: transform 0.3s ease; 
+    }
+    
+    .destaque:hover {
+      transform: scale(1.05); 
+    }
+  
+    .text-destaque {
+      margin-bottom: 0;
+      margin-top: 0;
+      font-size: 80%;
+      
+      
+    }
+    
+    .text-destaque h1 {
+      color: #000;
+      background-color: #ffde59;
+      font-weight: bold;
+      padding: 5px; 
+      border-radius: 20px; 
+      text-align: center;
+      margin-right: 90%;
+      margin-top: 5%;
+    }
+  
+    .text-products h2 {
+      margin-top: 0%;
+      margin-bottom: 5%;
+      color: black;
+      font-size: 120%;
+    }
+  
+    .livros-body{
+      display: flex;
+      flex-direction: column;
+      max-width: 1200px;
+      justify-content: center;
+    }
+    
+    .add-livro-card {
+        width: 200px;       
+        height: 300px;     
+        border: 2px dashed #fcd535;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 2rem;
+        transition: transform 0.3s ease;
+      }
+
+      .add-livro-card:hover {
+        transform: scale(1.05);
+      }
+      
+      
+      .plus-icon {
+        font-size: 56px;    
+        color: #fcd535;
+      }
+      

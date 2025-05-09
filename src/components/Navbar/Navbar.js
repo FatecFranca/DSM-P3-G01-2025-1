@@ -23,7 +23,7 @@ export function Navbar() {
 
                 <ul className="navbar-links">
                     <li><a href="/">Home</a></li>
-                    <li><a href="/about">Livros</a></li>
+                    <li><a href="/livros">Livros</a></li>
                     <li><a href="/literatura-brasileira">Literatura Brasileira</a></li>
                     <li><a href="/sobre">Sobre nós</a></li>
                 </ul>

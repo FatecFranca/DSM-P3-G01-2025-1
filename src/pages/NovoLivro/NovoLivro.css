@@ -1,0 +1,188 @@
+:root {
+    --primary-color: #FFD700;
+    --primary-hover: #FFC000;
+    --text-color: #2D3748;
+    --text-secondary: #4A5568;
+    --border-color: #E2E8F0;
+    --focus-ring: rgba(255, 215, 0, 0.3);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', Arial, sans-serif;
+    color: var(--text-color);
+}
+
+/* Container principal */
+.novo-livro-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #F7FAFC;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+}
+
+/* Cartão do formulário */
+.novo-livro-card {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px; /* Aumentei um pouco para caber os campos lado a lado */
+    margin-top: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.novo-livro-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Título */
+.novo-livro-titulo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+.novo-livro-titulo::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
+/* Container para grupos de inputs lado a lado */
+.novo-livro-row {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1.25rem;
+}
+
+/* Linhas do formulário - versão padrão (bloco) */
+.novo-livro-input-group {
+    width: 100%;
+    margin-bottom: 1.25rem;
+}
+
+/* Versão para campos lado a lado */
+.novo-livro-input-group.inline {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Labels */
+.novo-livro-input-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-weight: 500;
+}
+
+/* Campos de input */
+.novo-livro-input-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    background-color: white;
+    transition: var(--transition);
+}
+
+.novo-livro-input-field:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* Textarea - sempre ocupa linha inteira */
+.novo-livro-input-field[rows] {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* Botão - CADASTRAR */
+.novo-livro-submit-btn {
+    width: 60%;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    color: var(--text-color);
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: var(--transition);
+    display: block;
+    margin: 1.5rem auto 0;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.novo-livro-submit-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.novo-livro-submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .novo-livro-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .novo-livro-input-group.inline {
+        margin-bottom: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .novo-livro-container {
+        padding: 1.5rem 1rem;
+        align-items: center;
+    }
+
+    .novo-livro-card {
+        padding: 1.75rem;
+        margin-top: 0;
+    }
+
+    .novo-livro-titulo {
+        font-size: 1.5rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .novo-livro-submit-btn {
+        width: 100%;
+    }
+}

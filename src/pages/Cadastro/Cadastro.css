@@ -7,16 +7,16 @@
 }
 
 /* Container principal */
-.form-container {
+.novo-livro-container {
     display: flex;
     justify-content: center;
     background-color: white;
-    padding: 40px 20px 20px; 
+    padding: 40px 20px 20px;
     min-height: 100vh;
 }
 
-/* Cartão do formulário*/
-.form-card {
+/* Cartão do formulário */
+.novo-livro-card {
     background-color: white;
     padding: 2rem;
     border-radius: 8px;
@@ -26,39 +26,25 @@
     align-items: center;
     width: 100%;
     max-width: 500px;
-    margin-top: 30px; 
-}
-
-/* Logo */
-.logo {
-    width: 8rem;
-    margin-bottom: 1.5rem;
+    margin-top: 30px;
 }
 
 /* Título */
-.titulo-bemvindo {
-    font-size: 1.2rem;
+.novo-livro-titulo {
+    font-size: 1.5rem;
     font-weight: bold;
     color: #333;
     margin-bottom: 1.5rem;
 }
 
 /* Linhas do formulário */
-.form-row {
-    display: flex;
-    gap: 1rem;
-    width: 100%;
-    margin-bottom: 0.5rem; 
-}
-
-/* Grupos de input */
-.input-group {
+.novo-livro-input-group {
     width: 100%;
     margin-bottom: 0.8rem;
 }
 
 /* Labels */
-.input-label {
+.novo-livro-input-label {
     font-size: 0.9rem;
     color: #555;
     margin-bottom: 0.2rem;
@@ -66,9 +52,9 @@
 }
 
 /* Campos de input */
-.input-field {
+.novo-livro-input-field {
     width: 100%;
-    padding: 10px 12px; 
+    padding: 10px 12px;
     height: 38px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -77,82 +63,55 @@
     transition: border-color 0.2s ease;
 }
 
-.input-field:focus {
+.novo-livro-input-field:focus {
     border-color: #fbbf24;
     outline: none;
     box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
 }
 
-.input-field::placeholder {
-    font-size: 0.9rem; 
-    color: #999;
-    font-style: italic;
-}
-
-/* Campos específicos */
-input[name="uf"] {
-    text-transform: uppercase;
-    max-width: 60px;
-    text-align: center;
+/* Textarea */
+.novo-livro-input-field[rows] {
+    height: auto;
+    padding: 12px 14px;
 }
 
 /* Botão - CADASTRAR */
-.btn-submit {
+.novo-livro-submit-btn {
     width: 50%;
     background-color: #ffde59;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     color: #292626;
     padding: 10px;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     margin-top: 1rem;
-    transition: transform 0.2s ease;
-    margin: 1rem auto 0;
+    transition: transform 0.3s ease;
     display: block;
-    
+    margin: 1rem auto 0;
 }
 
-.btn-submit:hover {
-    transform: scale(1.02);
-}
-
-/* Mensagens */
-.error-message {
-    font-size: 0.8rem;
-    color: #e53e3e;
-    margin: 0.5rem 0;
-    text-align: center;
-}
-
-.success-message {
-    color: #2E7D32; 
-    background-color: #E8F5E9;
-    padding: 10px 15px;
-    border-left: 4px solid #2E7D32;
-    margin: 10px 0;
-    font-size: 0.9rem;
-    border-radius: 0 4px 4px 0;
+.novo-livro-submit-btn:hover {
+    transform: scale(1.1);
 }
 
 /* Responsividade */
 @media (max-width: 480px) {
-    .form-container {
-        padding: 30px 15px 15px; 
+    .novo-livro-container {
+        padding: 30px 15px 15px;
     }
-    
-    .form-card {
+
+    .novo-livro-card {
         padding: 1.5rem;
         margin-top: 20px;
     }
-    
-    .form-row {
+
+    .novo-livro-input-group {
         flex-direction: column;
-        gap: 0;
     }
-    
-    input[name="uf"] {
+
+    .novo-livro-input-field {
         max-width: 100%;
     }
 }
