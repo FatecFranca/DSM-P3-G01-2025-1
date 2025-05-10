@@ -1,117 +1,32 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-    color: #333;
-}
-
-/* Container principal */
-.novo-livro-container {
-    display: flex;
-    justify-content: center;
-    background-color: white;
-    padding: 40px 20px 20px;
-    min-height: 100vh;
-}
-
 /* Cartão do formulário */
-.novo-livro-card {
+.form-card {
     background-color: white;
-    padding: 2rem;
+    padding: 2rem; /* Defina um valor único */
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
+    min-height: 500px;
     margin-top: 30px;
 }
 
+/* Logo */
+.logo {
+    width: 8rem; /* Defina um valor único */
+    margin-bottom: 1.5rem;
+    display: block;
+    margin: 0 auto;
+}
+
 /* Título */
-.novo-livro-titulo {
-    font-size: 1.5rem;
+.titulo-bemvindo {
+    font-size: 1.2rem; /* Defina um valor único */
     font-weight: bold;
     color: #333;
+    margin-top: 1.2rem;
     margin-bottom: 1.5rem;
-}
-
-/* Linhas do formulário */
-.novo-livro-input-group {
-    width: 100%;
-    margin-bottom: 0.8rem;
-}
-
-/* Labels */
-.novo-livro-input-label {
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 0.2rem;
-    display: block;
-}
-
-/* Campos de input */
-.novo-livro-input-field {
-    width: 100%;
-    padding: 10px 12px;
-    height: 38px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 13px;
-    background-color: white;
-    transition: border-color 0.2s ease;
-}
-
-.novo-livro-input-field:focus {
-    border-color: #fbbf24;
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
-}
-
-/* Textarea */
-.novo-livro-input-field[rows] {
-    height: auto;
-    padding: 12px 14px;
-}
-
-/* Botão - CADASTRAR */
-.novo-livro-submit-btn {
-    width: 50%;
-    background-color: #ffde59;
-    border: none;
-    border-radius: 8px;
-    color: #292626;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: transform 0.3s ease;
-    display: block;
-    margin: 1rem auto 0;
-}
-
-.novo-livro-submit-btn:hover {
-    transform: scale(1.1);
-}
-
-/* Responsividade */
-@media (max-width: 480px) {
-    .novo-livro-container {
-        padding: 30px 15px 15px;
-    }
-
-    .novo-livro-card {
-        padding: 1.5rem;
-        margin-top: 20px;
-    }
-
-    .novo-livro-input-group {
-        flex-direction: column;
-    }
-
-    .novo-livro-input-field {
-        max-width: 100%;
-    }
 }

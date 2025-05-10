@@ -1,188 +1,143 @@
-:root {
-    --primary-color: #FFD700;
-    --primary-hover: #FFC000;
-    --text-color: #2D3748;
-    --text-secondary: #4A5568;
-    --border-color: #E2E8F0;
-    --focus-ring: rgba(255, 215, 0, 0.3);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
+/* Reset e fonte padrão */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', Arial, sans-serif;
-    color: var(--text-color);
-}
-
-/* Container principal */
-.novo-livro-container {
+    box-sizing: border-box; /* Garante que o padding e border não afetem o tamanho do elemento */
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  /* Container do formulário */
+  .form-container {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    background-color: #F7FAFC;
-    padding: 2rem 1rem;
-    min-height: 100vh;
-}
-
-/* Cartão do formulário */
-.novo-livro-card {
+    align-items: center;
     background-color: white;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  /* Cartão do formulário */
+  .form-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    max-width: 600px; /* Aumentei um pouco para caber os campos lado a lado */
-    margin-top: 2rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.novo-livro-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-/* Título */
-.novo-livro-titulo {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: 2rem;
-    position: relative;
     text-align: center;
     width: 100%;
-}
-
-.novo-livro-titulo::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background: var(--primary-color);
-    border-radius: 3px;
-}
-
-/* Container para grupos de inputs lado a lado */
-.novo-livro-row {
+    max-width: 900px;
+  }
+  
+  /* Título */
+  .titulo-bemvindo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Container para as linhas do formulário */
+  .form-row {
     display: flex;
     gap: 1rem;
     width: 100%;
-    margin-bottom: 1.25rem;
-}
-
-/* Linhas do formulário - versão padrão (bloco) */
-.novo-livro-input-group {
-    width: 100%;
-    margin-bottom: 1.25rem;
-}
-
-/* Versão para campos lado a lado */
-.novo-livro-input-group.inline {
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  /* Grupo de inputs */
+  .input-group {
     flex: 1;
-    margin-bottom: 0;
-}
-
-/* Labels */
-.novo-livro-input-label {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
+    min-width: 200px; /* Ajusta a largura mínima */
+    margin-bottom: 1rem;
+  }
+  
+  /* Rótulos */
+  .input-label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.2rem;
     display: block;
-    font-weight: 500;
-}
-
-/* Campos de input */
-.novo-livro-input-field {
+    text-align: left;
+  }
+  
+  /* Campos de input e textarea */
+  .input-field {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 0.9375rem;
+    padding: 10px 15px;
+    min-height: 40px;
+    border: 1px solid #ddd; /* Bordas leves */
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none; /* Remove o contorno de foco padrão */
     background-color: white;
-    transition: var(--transition);
-}
-
-.novo-livro-input-field:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    box-shadow: 0 0 0 3px var(--focus-ring);
-}
-
-/* Textarea - sempre ocupa linha inteira */
-.novo-livro-input-field[rows] {
-    min-height: 100px;
-    resize: vertical;
-    line-height: 1.5;
-}
-
-/* Botão - CADASTRAR */
-.novo-livro-submit-btn {
-    width: 60%;
-    background-color: var(--primary-color);
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  /* Campo select ajustado */
+  select.input-field {
+    padding-top: 10px;
+    padding-bottom: 8px;
+    height: 40px;
+    font-size: 13px;
+    line-height: 1.2;
+    vertical-align: middle;
+    background-color: white;
+    padding-right: 30px;
+    border: 1px solid #ddd; /* Adiciona borda ao select também */
+    border-radius: 6px; /* Bordas arredondadas para select */
+  }
+  
+  /* Foco nos campos de input */
+  .input-field:focus {
+    border-color: #fbbf24;
+    box-shadow: 0 0 5px rgba(250, 191, 36, 0.5);
+  }
+  
+  /* Botão de envio */
+  .btn-submit {
+    width: 50%;
+    max-width: 400px;
+    background-color: #ffde59;
     border: none;
-    border-radius: 8px;
-    color: var(--text-color);
-    padding: 0.75rem;
-    font-size: 1rem;
-    font-weight: 600;
+    border-radius: 6px;
+    color: #292626;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
-    margin-top: 1.5rem;
-    transition: var(--transition);
+    transition: transform 0.2s ease;
+    margin-top: 1rem;
+    margin: 1rem auto 0;
     display: block;
-    margin: 1.5rem auto 0;
-    letter-spacing: 0.5px;
-    position: relative;
-    overflow: hidden;
-}
-
-.novo-livro-submit-btn:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.novo-livro-submit-btn:active {
-    transform: translateY(0);
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .novo-livro-row {
-        flex-direction: column;
-        gap: 0;
+  }
+  
+  .btn-submit:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Responsividade */
+  @media (max-width: 480px) {
+    .form-container {
+      padding: 30px 15px 15px;
     }
-    
-    .novo-livro-input-group.inline {
-        margin-bottom: 1.25rem;
+  
+    .form-card {
+      padding: 1.5rem;
+      margin-top: 20px;
     }
-}
-
-@media (max-width: 480px) {
-    .novo-livro-container {
-        padding: 1.5rem 1rem;
-        align-items: center;
+  
+    .form-row {
+      flex-direction: column;
+      gap: 0;
     }
-
-    .novo-livro-card {
-        padding: 1.75rem;
-        margin-top: 0;
+  
+    .input-group {
+      min-width: 100%; /* Ajuste para garantir que os campos ocupem toda a largura */
     }
-
-    .novo-livro-titulo {
-        font-size: 1.5rem;
-        margin-bottom: 1.75rem;
-    }
-
-    .novo-livro-submit-btn {
-        width: 100%;
-    }
-}
+  }
+  
