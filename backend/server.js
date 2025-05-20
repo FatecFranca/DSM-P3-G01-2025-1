@@ -1,14 +1,21 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 const app = express();
-const mongoUrl = 'mongodb://localhost:27017';
+const mongoUrl = process.env.DATABASE_URL || 'mongodb://localhost:27017';
 const dbName = 'bookhub';
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Servir arquivos estáticos da pasta uploads
+app.use('/uploads', express.static('uploads'));
 
 let db;
 
@@ -45,6 +52,33 @@ app.post('/api/clientes', async (req, res) => {
   } catch (error) {
     console.error('Erro ao criar cliente:', error);
     res.status(500).json({ error: 'Erro ao processar cadastro' });
+  }
+});
+
+// Rota para cadastrar novo livro
+app.post('/api/livros', upload.single('capa'), async (req, res) => {
+  try {
+    console.log('Body:', req.body);
+    console.log('File:', req.file);
+    const livroData = { ...req.body, capa: req.file ? req.file.filename : null };
+    const collection = db.collection('livros');
+    const resultado = await collection.insertOne(livroData);
+    res.status(201).json({ ...livroData, _id: resultado.insertedId });
+  } catch (error) {
+    console.error('Erro ao cadastrar livro:', error);
+    res.status(500).json({ error: 'Erro ao processar cadastro do livro' });
+  }
+});
+
+// Rota para listar todos os livros cadastrados
+app.get('/api/livros', async (req, res) => {
+  try {
+    const collection = db.collection('livros');
+    const livros = await collection.find().toArray();
+    res.json(livros);
+  } catch (error) {
+    console.error('Erro ao buscar livros:', error);
+    res.status(500).json({ error: 'Erro ao buscar livros' });
   }
 });
 
