@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // <-- IMPORTANTE
+import { useNavigate } from "react-router-dom";
 import Destaque from '../../assets/images/bannerLivros.png';
 import '../../pages/Livros/Livros.css';
 import Footer from '../../components/Footer/Footer.js';
@@ -7,15 +7,29 @@ import { Navbar } from '../../components/Navbar/Navbar.js';
 import { Faixa } from '../../components/Faixa/Faixa.js';
 
 function Livros() {
-    const navigate = useNavigate(); // <-- DEFINIR AQUI
+    const navigate = useNavigate();
     const [livros, setLivros] = useState([]);
+    const [filtro, setFiltro] = useState("");
+    const [genero, setGenero] = useState("");
 
     useEffect(() => {
         fetch('http://localhost:3001/api/livros')
             .then(res => res.json())
-            .then(data => setLivros(data))
+            .then(data => {
+                setLivros(data);
+            })
             .catch(() => setLivros([]));
     }, []);
+
+    // Filtro por título, autor ou gênero
+    const livrosFiltrados = livros.filter(livro => {
+        const busca = filtro.toLowerCase();
+        const generoBusca = genero;
+        return (
+            (!busca || livro.titulo?.toLowerCase().includes(busca) || livro.autor?.toLowerCase().includes(busca)) &&
+            (!generoBusca || livro.genero === generoBusca)
+        );
+    });
 
     return (
         <div className="livros-content">
@@ -30,6 +44,33 @@ function Livros() {
                 </div>
                 <div className='text-products'>
                     <h2>Os melhores livros para você</h2>
+                    {/* Filtro */}
+                    <div style={{ display: 'flex', gap: 16, marginBottom: 32, alignItems: 'center' }}>
+                        <input
+                            type="text"
+                            placeholder="Filtrar por título ou autor"
+                            value={filtro}
+                            onChange={e => setFiltro(e.target.value)}
+                            style={{ padding: 8, borderRadius: 6, border: '1px solid #ccc', fontSize: 15, minWidth: 220 }}
+                        />
+                        <select
+                            value={genero}
+                            onChange={e => setGenero(e.target.value)}
+                            style={{ padding: 8, borderRadius: 6, border: genero ? '2px solid #3b82f6' : '1px solid #ccc', fontSize: 15, color: genero ? '#222' : '#555', fontWeight: genero ? 600 : 400, background: '#fff', outline: genero ? '2px solid #3b82f6' : 'none', boxShadow: genero ? '0 0 0 2px #3b82f633' : 'none', transition: 'border 0.2s, box-shadow 0.2s' }}
+                        >
+                            <option value="">Todos os gêneros</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Aventura">Aventura</option>
+                            <option value="Ficção Científica">Ficção Científica</option>
+                            <option value="Terror">Terror</option>
+                            <option value="Mistério">Mistério</option>
+                            <option value="Fantasia">Fantasia</option>
+                            <option value="Biografia">Biografia</option>
+                            <option value="Não-ficção">Não-ficção</option>
+                            <option value="História">História</option>
+                            <option value="Poesia">Poesia</option>
+                        </select>
+                    </div>
                     <div style={{
                         display: 'flex',
                         flexWrap: 'wrap',
@@ -41,8 +82,8 @@ function Livros() {
                         <div className="add-livro-card" onClick={() => navigate('/novo-livro')}>
                             <span className="plus-icon">+</span>
                         </div>
-                        {livros.length === 0 && <p style={{marginLeft: 16}}>Nenhum livro cadastrado.</p>}
-                        {livros.map(livro => (
+                        {livrosFiltrados.length === 0 && <p style={{marginLeft: 16}}>Nenhum livro encontrado.</p>}
+                        {livrosFiltrados.map(livro => (
                             <div key={livro._id}
                                 style={{
                                     border: '1.5px solid #fcd535',
@@ -77,10 +118,6 @@ function Livros() {
                                     color: '#292626', 
                                     fontWeight: 'bold', 
                                     marginBottom: 8, 
-                                    background: '#ffde59', 
-                                    borderRadius: '20px', 
-                                    padding: '4px 12px', 
-                                    display: 'inline-block',
                                     fontSize: 16
                                 }}>
                                     R$ {Number(livro.preco).toFixed(2)}

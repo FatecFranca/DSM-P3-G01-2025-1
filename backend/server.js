@@ -82,6 +82,32 @@ app.get('/api/livros', async (req, res) => {
   }
 });
 
+// Rota para avaliações de livros
+app.get('/api/livros/:id/avaliacoes', async (req, res) => {
+  try {
+    const collection = db.collection('avaliacoes');
+    const avaliacoes = await collection.find({ livroId: req.params.id }).toArray();
+    res.json(avaliacoes);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar avaliações' });
+  }
+});
+
+app.post('/api/livros/:id/avaliacoes', async (req, res) => {
+  try {
+    const collection = db.collection('avaliacoes');
+    const avaliacao = {
+      livroId: req.params.id,
+      texto: req.body.texto,
+      data: new Date()
+    };
+    await collection.insertOne(avaliacao);
+    res.status(201).json(avaliacao);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao salvar avaliação' });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
