@@ -55,6 +55,20 @@ app.post('/api/clientes', async (req, res) => {
   }
 });
 
+// Rota para buscar cliente por e-mail (login)
+app.get('/api/clientes', async (req, res) => {
+  const { email } = req.query;
+  if (!email) return res.status(400).json({ error: 'Email é obrigatório' });
+  try {
+    const collection = db.collection('clientes');
+    const user = await collection.findOne({ email });
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado' });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar usuário' });
+  }
+});
+
 // Rota para cadastrar novo livro
 app.post('/api/livros', upload.single('capa'), async (req, res) => {
   try {
