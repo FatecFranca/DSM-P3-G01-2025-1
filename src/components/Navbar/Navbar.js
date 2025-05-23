@@ -49,49 +49,36 @@ export function Navbar() {
                     <li><a href="/sobre">Sobre nós</a></li>
                 </ul>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        {userName && (
+                    <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                        {userName ? (
                             <span 
-                                style={{ color: '#292626', fontSize: 13, fontWeight: 600, marginRight: 0, paddingRight: 0, cursor: 'pointer' }}
+                                className="navbar-hello-highlight"
+                                style={{ background: '#fafafa', color: '#333', fontSize: 13, fontWeight: 700, fontFamily: 'Poppins, Arial, sans-serif', marginRight: 18, cursor: 'pointer', marginLeft: -12, display: 'flex', alignItems: 'center', gap: 6, boxShadow: '0 2px 8px rgba(236, 236, 236, 0.86)' }}
                                 onClick={handlePerfilClick}
                             >
-                                {userName}
+                                Olá, {userName}
+                                <svg style={{ marginLeft: 4 }} width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
                             </span>
+                        ) : (
+                            <div className="navbar-icon" style={{ cursor: 'pointer', position: 'relative', marginLeft: 0, paddingLeft: 0 }} onClick={handlePerfilClick}>
+                                <img src={Perfil} alt="Ícone de Perfil" style={{marginLeft: 0, paddingLeft: 0}} />
+                            </div>
                         )}
-                        <div className="navbar-icon" style={{ cursor: 'pointer', position: 'relative', marginLeft: 0, paddingLeft: 0 }} onClick={handlePerfilClick}>
-                            <img src={Perfil} alt="Ícone de Perfil" style={{marginLeft: 0, paddingLeft: 0}} />
-                            {showMenu && userEmail && (
-                                <div style={{
-                                    position: 'absolute',
-                                    top: '110%',
-                                    right: '-10px',
-                                    background: '#fff',
-                                    border: '2.5px solid rgba(0,0,0,0.5)',
-                                    borderRadius: 10,
-                                    boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
-                                    padding: '12px 20px',
-                                    minWidth: 180,
-                                    zIndex: 1002,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'flex-start',
-                                }}>
-                                    <div style={{
-                                        position: 'absolute',
-                                        top: -14,
-                                        right: 24,
-                                        width: 0,
-                                        height: 0,
-                                        borderLeft: '10px solid transparent',
-                                        borderRight: '10px solid transparent',
-                                        borderBottom: '14px solid rgba(0,0,0,0.5)',
-                                        zIndex: 1003
-                                    }} />
-                                    <div style={{ color: '#292626', marginBottom: 8, fontSize: 14 }}>{userEmail}</div>
-                                    <button onClick={handleLogout} style={{ background: '#ffde59', border: 'none', borderRadius: 6, padding: '6px 16px', fontWeight: 600, color: '#292626', cursor: 'pointer', fontSize: 13, alignSelf: 'flex-start' }}>Sair</button>
-                                </div>
-                            )}
-                        </div>
+                        {showMenu && userEmail && (
+                            <div className="menu-dropdown-modern">
+                                <button className="btn-logout-modern" onClick={handleLogout}>
+                                <svg xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 8 }} width="16" height="16" fill="none" stroke="#292626" strokeWidth="2" viewBox="0 0 24 24">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                                </svg>
+                                Sair
+                                </button>
+                            </div>
+                        )}
+
                     </div>
                     <div className="carrinho-icon" style={{ marginLeft: 0 }}>
                         <img src={Carrinho} alt="Ícone de Carrinho de Compras" />
@@ -101,4 +88,3 @@ export function Navbar() {
         </nav>
     );
 }
-
