@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Destaque from '../../assets/images/bannerLivros.png';
@@ -5,12 +7,17 @@ import '../../pages/Livros/Livros.css';
 import Footer from '../../components/Footer/Footer.js';
 import { Navbar } from '../../components/Navbar/Navbar.js';
 import { Faixa } from '../../components/Faixa/Faixa.js';
+import { FiEdit, FiShoppingCart } from 'react-icons/fi';
 
 function Livros() {
     const navigate = useNavigate();
     const [livros, setLivros] = useState([]);
     const [filtro, setFiltro] = useState("");
     const [genero, setGenero] = useState("");
+
+    // Estados para edição
+    const [livroEditando, setLivroEditando] = useState(null);
+    const [formData, setFormData] = useState({ titulo: '', preco: '' });
 
     useEffect(() => {
         fetch('http://localhost:3001/api/livros')
@@ -31,6 +38,37 @@ function Livros() {
         );
     });
 
+    // Função para abrir modal de edição
+    const abrirEdicao = (livro) => {
+        setLivroEditando(livro);
+        setFormData({
+            titulo: livro.titulo || '',
+            preco: livro.preco || '',
+        });
+    };
+
+    // Função para salvar edição (aqui só atualiza localmente, você pode adaptar para API)
+    const salvarEdicao = () => {
+        // Atualiza o livro na lista local (exemplo simples)
+        setLivros((prevLivros) =>
+            prevLivros.map(l =>
+                l._id === livroEditando._id ? { ...l, titulo: formData.titulo, preco: formData.preco } : l
+            )
+        );
+        setLivroEditando(null);
+    };
+
+    // Função para navegar para detalhes do livro
+    const verMaisLivro = (livro) => {
+        // Para livros vindos do Prisma, o id é 'id', não '_id'
+        const id = livro.id || livro._id;
+        if (id) {
+            navigate(`/livros/${id}`);
+        } else {
+            alert('Livro não encontrado.');
+        }
+    };
+
     return (
         <div className="livros-content">
             <Faixa />
@@ -43,7 +81,6 @@ function Livros() {
                     <img src={Destaque} alt="Destaque" className="destaque" />
                 </div>
                 <div className='text-products'>
-                    <h2>Os melhores livros para você</h2>
                     {/* Filtro */}
                     <div style={{ display: 'flex', gap: 16, marginBottom: 32, alignItems: 'center' }}>
                         <input
@@ -82,51 +119,100 @@ function Livros() {
                         <div className="add-livro-card" onClick={() => navigate('/novo-livro')}>
                             <span className="plus-icon">+</span>
                         </div>
-                        {livrosFiltrados.length === 0 && <p style={{marginLeft: 16}}>Nenhum livro encontrado.</p>}
+                        {livrosFiltrados.length === 0 && <p style={{ marginLeft: 16 }}>Nenhum livro encontrado.</p>}
+
                         {livrosFiltrados.map(livro => (
-                            <div key={livro._id}
-                                style={{
-                                    border: '1.5px solid #fcd535',
-                                    borderRadius: 12,
-                                    padding: 16,
-                                    width: 200,
-                                    minHeight: 300,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    background: '#fff',
-                                    boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
-                                    cursor: 'pointer',
-                                    transition: 'box-shadow 0.2s',
-                                }}
-                                onClick={() => navigate(`/livros/${livro._id}`)}
+                            <div
+                                key={livro.id || livro._id}
+                                className="livro-card"
+                                onClick={() => verMaisLivro(livro)}
                                 title="Ver detalhes do livro"
                             >
+                                {livro.genero && (
+                                    <span className="livro-genero">{livro.genero}</span>
+                                )}
+
+                                {/* Ícone lápis no canto superior esquerdo */}
+                                <div className="edit-icon" onClick={e => { e.stopPropagation(); abrirEdicao(livro); }}>
+                                    <FiEdit size={18} />
+                                </div>
+
                                 {livro.capa ? (
                                     <img
                                         src={`http://localhost:3001/uploads/${livro.capa}`}
                                         alt={livro.titulo || 'Capa do livro'}
-                                        style={{ width: 120, height: 160, objectFit: 'cover', borderRadius: 4, marginBottom: 12 }}
+                                        className="livro-capa"
                                     />
                                 ) : (
-                                    <div style={{ width: 120, height: 160, background: '#eee', borderRadius: 4, marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#aaa', fontSize: 12 }}>
-                                        Sem capa
-                                    </div>
+                                    <div className="livro-capa-placeholder">Sem capa</div>
                                 )}
-                                <strong style={{ fontSize: 16, marginBottom: 8, textAlign: 'center' }}>{livro.titulo || livro.nome}</strong>
-                                <span style={{ 
-                                    color: '#292626', 
-                                    fontWeight: 'bold', 
-                                    marginBottom: 8, 
-                                    fontSize: 16
-                                }}>
+
+                                <strong className="livro-titulo">{livro.titulo || livro.nome}</strong>
+                                <span className="livro-preco">
                                     R$ {Number(livro.preco).toFixed(2)}
                                 </span>
+
+                                <div className="buttons-row">
+                                    <button
+                                        className="livro-botao"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            verMaisLivro(livro);
+                                        }}
+                                    >
+                                        Ver mais
+                                    </button>
+                                    {/* Ícone carrinho ao lado do botão */}
+                                    <button
+                                        className="carrinho-botao"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            alert(`Livro "${livro.titulo}" adicionado ao carrinho!`);
+                                        }}
+                                        aria-label="Adicionar ao carrinho"
+                                    >
+                                        <FiShoppingCart size={18} />
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+
+            {/* Modal de edição */}
+            {livroEditando && (
+                <div className="modal-overlay" onClick={() => setLivroEditando(null)}>
+                    <div className="modal" onClick={e => e.stopPropagation()}>
+                        <h2>Editar Livro</h2>
+                        <form onSubmit={e => {
+                            e.preventDefault();
+                            salvarEdicao();
+                        }}>
+                            <label>
+                                Título:
+                                <input
+                                    type="text"
+                                    value={formData.titulo}
+                                    onChange={e => setFormData({ ...formData, titulo: e.target.value })}
+                                />
+                            </label>
+                            <label>
+                                Preço:
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={formData.preco}
+                                    onChange={e => setFormData({ ...formData, preco: e.target.value })}
+                                />
+                            </label>
+                            <button type="submit">Salvar</button>
+                            <button type="button" onClick={() => setLivroEditando(null)}>Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             <Footer />
         </div>
     );

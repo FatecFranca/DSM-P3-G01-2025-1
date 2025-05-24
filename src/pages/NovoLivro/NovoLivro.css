@@ -141,3 +141,31 @@
     }
   }
   
+  
+.input-file-field {
+  height: 55px;
+  font-size: 13px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.input-file-field::file-selector-button {
+  background-color: #ffde59;
+  color: #292626;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: -4px;
+  transition: background-color 0.3s ease;
+}
+
+.input-file-field::file-selector-button:hover {
+  background-color: #fbbf24;
+}

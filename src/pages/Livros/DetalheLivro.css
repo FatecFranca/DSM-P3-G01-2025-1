@@ -1,0 +1,57 @@
+.detalhe-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #222;
+}
+
+.voltar-btn {
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+.voltar-btn:hover {
+  color: #000;
+}
+
+.livro-detalhe-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.livro-detalhe-capa {
+  max-width: 280px;
+  height: auto;
+  border-radius: 12px;
+  align-self: center;
+  object-fit: cover;
+}
+
+.livro-detalhe-info h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.livro-autor,
+.livro-genero {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.livro-descricao {
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+.livro-preco {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #111;
+}

@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Faixa } from '../../components/Faixa/Faixa.js';
-import '../../pages/NovoLivro/NovoLivro.css'; 
+import '../../pages/NovoLivro/NovoLivro.css';
 
 const NovoLivro = () => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const [capa, setCapa] = useState(null);
   const [formData, setFormData] = useState({});
+  const [fileName, setFileName] = useState('Nenhum arquivo selecionado');
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === 'file') {
-      setFormData((prev) => ({ ...prev, [name]: files[0] }));
-      setCapa(files[0]);
+      const file = files[0];
+      setFormData((prev) => ({ ...prev, [name]: file }));
+      setFileName(file ? file.name : 'Nenhum arquivo selecionado');
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -25,12 +26,10 @@ const NovoLivro = () => {
     Object.entries(formData).forEach(([key, value]) => {
       data.append(key, value);
     });
+
     try {
       await fetch('http://localhost:3001/api/livros', {
         method: 'POST',
-        headers: {
-          // 'Content-Type': 'application/json', // Não definir para FormData
-        },
         body: data,
       });
       navigate('/livros');
@@ -52,30 +51,30 @@ const NovoLivro = () => {
             <div className="form-row">
               <div className="input-group">
                 <label className="input-label">ID *</label>
-                <input type="text" name="id" className="input-field" placeholder="ID do livro" required onChange={handleChange} />
+                <input type="text" name="id" className="input-field" required onChange={handleChange} />
               </div>
               <div className="input-group">
                 <label className="input-label">Título *</label>
-                <input type="text" name="titulo" className="input-field" placeholder="Título do livro" required onChange={handleChange} />
+                <input type="text" name="titulo" className="input-field" required onChange={handleChange} />
               </div>
               <div className="input-group">
                 <label className="input-label">Autor *</label>
-                <input type="text" name="autor" className="input-field" placeholder="Nome do autor" required onChange={handleChange} />
+                <input type="text" name="autor" className="input-field" required onChange={handleChange} />
               </div>
             </div>
 
             <div className="form-row">
               <div className="input-group">
                 <label className="input-label">Editora *</label>
-                <input type="text" name="editora" className="input-field" placeholder="Nome da editora" required onChange={handleChange} />
+                <input type="text" name="editora" className="input-field" required onChange={handleChange} />
               </div>
               <div className="input-group">
                 <label className="input-label">ISBN *</label>
-                <input type="text" name="isbn" className="input-field" placeholder="Código ISBN" required onChange={handleChange} />
+                <input type="text" name="isbn" className="input-field" required onChange={handleChange} />
               </div>
               <div className="input-group">
                 <label className="input-label">Ano de Publicação *</label>
-                <input type="number" name="ano" className="input-field" placeholder="Ex: 2023" required onChange={handleChange} />
+                <input type="number" name="ano" className="input-field" required onChange={handleChange} />
               </div>
             </div>
 
@@ -98,28 +97,29 @@ const NovoLivro = () => {
               </div>
               <div className="input-group">
                 <label className="input-label">Preço (R$) *</label>
-                <input type="number" step="0.01" name="preco" className="input-field" placeholder="Ex: 49.90" required onChange={handleChange} />
+                <input type="number" step="0.01" name="preco" className="input-field" required onChange={handleChange} />
               </div>
               <div className="input-group">
                 <label className="input-label">Quantidade em Estoque *</label>
-                <input type="number" name="quantidade" className="input-field" placeholder="Ex: 100" required onChange={handleChange} />
+                <input type="number" name="quantidade" className="input-field" required onChange={handleChange} />
               </div>
             </div>
 
-            
             <div className="form-row">
               <div className="input-group">
                 <label className="input-label">Capa do Livro *</label>
-                <input 
-                  type="file" 
-                  name="capa" 
-                  className="input-field" 
-                  accept="image/*" 
+                <input
+                  type="file"
+                  name="capa"
+                  accept="image/*"
                   required
-                  onChange={handleChange} 
+                  onChange={handleChange}
+                  className="input-field input-file-field"
                 />
+                <small style={{ fontSize: '12px', color: '#777' }}></small>
               </div>
             </div>
+
 
             <div className="form-row">
               <div className="input-group" style={{ width: '100%' }}>
@@ -127,7 +127,6 @@ const NovoLivro = () => {
                 <textarea
                   name="sinopse"
                   className="input-field"
-                  placeholder="Escreva a sinopse do livro"
                   rows="4"
                   required
                   onChange={handleChange}
@@ -135,10 +134,10 @@ const NovoLivro = () => {
               </div>
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="btn-submit"
-              onMouseEnter={() => setIsHovered(true)} 
+              onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
               Cadastrar Livro

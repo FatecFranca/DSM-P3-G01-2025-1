@@ -6,14 +6,13 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./node_modules/@prisma/client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-
 model Cliente {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   nome         String
@@ -32,15 +31,23 @@ model Cliente {
   updatedAt    DateTime @updatedAt
 }
 
-model Produto {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  nome         String
-  descricao    String
-  preco        Float
-  imagem       String
-  categoria    String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+model Livro {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  titulo      String
+  autor       String
+  editora     String
+  isbn        String   @unique
+  ano         Int
+  genero      String
+  preco       Float
+  quantidade  Int
+  sinopse     String
+  capa        String   
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
- 
+
+
+
+

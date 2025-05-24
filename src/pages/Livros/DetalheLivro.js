@@ -17,14 +17,14 @@ const DetalheLivro = () => {
   const [enviando, setEnviando] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/livros`)
+    fetch(`http://localhost:3001/api/livros/${id}`)
       .then(res => res.json())
       .then(data => {
-        const found = data.find(l => l._id === id);
-        setLivro(found);
+        setLivro(data);
         setLoading(false);
       })
       .catch(() => setLoading(false));
+
     fetch(`http://localhost:3001/api/livros/${id}/avaliacoes`)
       .then(res => res.json())
       .then(data => setAvaliacoes(data))
@@ -48,8 +48,9 @@ const DetalheLivro = () => {
       .then(data => setAvaliacoes(data));
   };
 
-  // Média das notas
-  const media = avaliacoes.length > 0 ? (avaliacoes.reduce((acc, a) => acc + (a.nota || 0), 0) / avaliacoes.length).toFixed(1) : 0;
+  const media = avaliacoes.length > 0
+    ? (avaliacoes.reduce((acc, a) => acc + (a.nota || 0), 0) / avaliacoes.length).toFixed(1)
+    : 0;
 
   if (loading) return <div>Carregando...</div>;
   if (!livro) return <div>Livro não encontrado.</div>;
@@ -73,7 +74,6 @@ const DetalheLivro = () => {
         padding: 48,
         minHeight: 420,
       }}>
-        {/* Capa do livro */}
         <div style={{ flex: '0 0 320px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {livro.capa && (
             <img
@@ -83,7 +83,6 @@ const DetalheLivro = () => {
             />
           )}
         </div>
-        {/* Informações do livro + sinopse separada */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'row', gap: 32, minWidth: 320 }}>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
             <h2 style={{ marginBottom: 10, color: '#292626', fontWeight: 700, fontSize: 32 }}>{livro.titulo || livro.nome}</h2>
@@ -97,12 +96,11 @@ const DetalheLivro = () => {
               <span style={{
                 color: '#292626',
                 fontWeight: 'bold',
-                fontSize: 32 // Aumenta o tamanho do preço
+                fontSize: 32
               }}>
                 R$ {Number(livro.preco).toFixed(2)}
               </span>
             </div>
-            {/* Botões */}
             <div style={{ display: 'flex', gap: 24, marginTop: 12 }}>
               <button
                 onClick={() => navigate('/comprar')}
@@ -142,21 +140,20 @@ const DetalheLivro = () => {
               </button>
             </div>
           </div>
-          {/* Sinopse separada */}
-          <div style={{ 
-            flex: 1, 
-            borderRadius: 10, 
-            padding: 24, 
-            boxShadow: '0 1px 4px #fcd53533', 
-            color: '#292626', 
-            fontSize: 16, 
-            minWidth: 320, 
-            maxWidth: 600, 
+          <div style={{
+            flex: 1,
+            borderRadius: 10,
+            padding: 24,
+            boxShadow: '0 1px 4px #fcd53533',
+            color: '#292626',
+            fontSize: 16,
+            minWidth: 320,
+            maxWidth: 600,
             height: 'fit-content',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start', // alinha no topo
-            alignItems: 'flex-start', // alinha à esquerda
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
             background: 'none'
           }}>
             <b>Sinopse:</b> <br />
@@ -164,7 +161,8 @@ const DetalheLivro = () => {
           </div>
         </div>
       </div>
-      {/* Aba de avaliações */}
+
+      {/* Avaliação e média */}
       <div style={{
         maxWidth: '90vw',
         width: '100%',
@@ -177,6 +175,21 @@ const DetalheLivro = () => {
         minHeight: 220,
       }}>
         <h3 style={{ color: '#292626', fontWeight: 700, fontSize: 26, marginBottom: 22 }}>Avalie</h3>
+
+        {avaliacoes.length > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+            <strong style={{ color: '#292626', fontSize: 18 }}>Média:</strong>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                i < Math.round(media)
+                  ? <BsStarFill key={i} color="#ffde59" size={20} />
+                  : <BsStar key={i} color="#ffde59" size={20} />
+              ))}
+              <span style={{ marginLeft: 8, fontSize: 17, color: '#292626' }}>{media} / 5</span>
+            </div>
+          </div>
+        )}
+
         <form style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 32 }} onSubmit={handleAvaliacao}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
             {Array.from({ length: 5 }).map((_, i) => (
@@ -184,7 +197,9 @@ const DetalheLivro = () => {
                 {i < novaNota ? <BsStarFill color="#ffde59" size={28} /> : <BsStar color="#ffde59" size={28} />}
               </span>
             ))}
-            <span style={{ color: '#292626', fontWeight: 500, fontSize: 18, marginLeft: 8 }}>{novaNota > 0 ? `${novaNota} estrela${novaNota > 1 ? 's' : ''}` : ''}</span>
+            <span style={{ color: '#292626', fontWeight: 500, fontSize: 18, marginLeft: 8 }}>
+              {novaNota > 0 ? `${novaNota} estrela${novaNota > 1 ? 's' : ''}` : ''}
+            </span>
           </div>
           <textarea
             placeholder="Deixe seu feedback sobre este livro..."
@@ -223,7 +238,7 @@ const DetalheLivro = () => {
             {enviando ? 'Enviando...' : 'Enviar avaliação'}
           </button>
         </form>
-        {/* Avaliações recebidas */}
+
         {avaliacoes.length > 0 && (
           <>
             <h3 style={{ color: '#292626', fontWeight: 700, fontSize: 22, marginBottom: 12 }}>Avaliações</h3>

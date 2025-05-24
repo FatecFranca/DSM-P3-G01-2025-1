@@ -33,21 +33,59 @@ const Cadastro = () => {
         'pedrohcsilva77@gmail.com'
     ];
 
+    // Função para formatar CPF
+    const formatCPF = (value) => {
+        value = value.replace(/\D/g, '');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        return value.slice(0, 14);
+    };
+
+    // Função para formatar Telefone/Celular
+    const formatTelefone = (value) => {
+        value = value.replace(/\D/g, '');
+
+        if (value.length > 11) value = value.slice(0, 11);
+
+        if (value.length <= 10) {
+            value = value.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+        } else {
+            value = value.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+        }
+
+        return value;
+    };
+
+    // Função para formatar CEP
+    const formatCEP = (value) => {
+        value = value.replace(/\D/g, '');
+        value = value.slice(0, 8);
+
+        if (value.length > 5) {
+            value = value.replace(/^(\d{5})(\d{1,3})/, '$1-$2');
+        }
+
+        return value;
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        
-        
+        let formattedValue = value;
+
         if (name === 'uf') {
-            setFormData(prev => ({
-                ...prev,
-                [name]: value.toUpperCase()
-            }));
-            return;
+            formattedValue = value.toUpperCase();
+        } else if (name === 'cpf') {
+            formattedValue = formatCPF(value);
+        } else if (name === 'celular') {
+            formattedValue = formatTelefone(value);
+        } else if (name === 'cep') {
+            formattedValue = formatCEP(value);
         }
-        
+
         setFormData(prev => ({
             ...prev,
-            [name]: value
+            [name]: formattedValue
         }));
     };
 
@@ -56,69 +94,68 @@ const Cadastro = () => {
             setError('Preencha todos os campos obrigatórios');
             return false;
         }
-        
+
         if (formData.senha !== formData.confirmarSenha) {
             setError('As senhas não coincidem');
             return false;
         }
-        
+
         if (formData.uf && formData.uf.length !== 2) {
             setError('UF deve ter 2 caracteres');
             return false;
         }
-        
+
         return true;
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError('');
-        
+
         if (!validateForm()) return;
-        
+
         if (formData.senha !== formData.confirmarSenha) {
-          setError('As senhas não coincidem');
-          return;
+            setError('As senhas não coincidem');
+            return;
         }
 
         let isAdmin = false;
         if (adminEmails.includes(formData.email)) {
             isAdmin = true;
-
-                    } else {
+        } else {
             isAdmin = false;
         }
 
         setIsSubmitting(true);
-      
+
         try {
-          const { confirmarSenha, ...clienteData } = formData;
-          
-          const response = await fetch('http://localhost:3001/api/clientes', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(clienteData)
-          });
-      
-          if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Erro ao cadastrar');
-          }
-      
-          setSuccess(true);
-          setTimeout(() => {
-            navigate('/login', { state: { successMessage: 'Cadastro realizado com sucesso!' } });
-          }, 1500);
-          
+            const { confirmarSenha, ...clienteData } = formData;
+
+            const response = await fetch('http://localhost:3001/api/clientes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(clienteData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Erro ao cadastrar');
+            }
+
+            setSuccess(true);
+            setTimeout(() => {
+                navigate('/login', { state: { successMessage: 'Cadastro realizado com sucesso!' } });
+            }, 1500);
+
         } catch (err) {
-          console.error('Erro no cadastro:', err);
-          setError(err.message || 'Erro ao processar cadastro');
+            console.error('Erro no cadastro:', err);
+            setError(err.message || 'Erro ao processar cadastro');
         } finally {
-          setIsSubmitting(false);
+            setIsSubmitting(false);
         }
-      };
+    };
 
     return (
         <>
@@ -135,7 +172,7 @@ const Cadastro = () => {
                             ⚠️ {error}
                         </div>
                     )}
-                    
+
                     {success && (
                         <div className="success-message">
                             Cadastro realizado com sucesso! Redirecionando...
@@ -180,6 +217,7 @@ const Cadastro = () => {
                                     placeholder="000.000.000-00"
                                     value={formData.cpf}
                                     onChange={handleChange}
+                                    maxLength={14}
                                     required
                                 />
                             </div>
@@ -192,6 +230,7 @@ const Cadastro = () => {
                                     placeholder="(00) 00000-0000"
                                     value={formData.celular}
                                     onChange={handleChange}
+                                    maxLength={15}
                                     required
                                 />
                             </div>
@@ -285,6 +324,7 @@ const Cadastro = () => {
                                     placeholder="00000-000"
                                     value={formData.cep}
                                     onChange={handleChange}
+                                    maxLength={9}
                                     required
                                 />
                             </div>

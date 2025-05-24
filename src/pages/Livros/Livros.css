@@ -42,7 +42,7 @@
   color: #000;
   background-color: #ffde59;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 14px;
   padding: 8px 16px;
   border-radius: 20px;
   text-align: left;
@@ -67,8 +67,9 @@
 .add-livro-card {
   width: 200px;
   height: 300px;
-  border: 2px dashed #fcd535;
-  border-radius: 16px;
+  box-sizing: border-box;
+  border: 1px dashed #9ca3af;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,6 +77,7 @@
   margin-bottom: 2rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: #fff;
+  padding: 16px; /* igual ao .livro-card */
 }
 
 .add-livro-card:hover {
@@ -85,63 +87,131 @@
 
 .plus-icon {
   font-size: 56px;
-  color: #fcd535;
+  color: #9ca3af;
 }
 
-/* Card do livro */
 .livro-card {
+  position: relative;
+  border: 1px solid #f3f4f6;
+  border-radius: 10px;
+  padding: 16px;
+  width: 200px;
+  height: 300px;
   background: #fff;
-  border: 1.5px solid #fcd535;
-  border-radius: 16px;
-  padding: 20px 16px;
-  width: 220px;
-  min-height: 340px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-  transition: all 0.25s ease-in-out;
 }
 
 .livro-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
 
-.livro-card img {
-  width: 130px;
-  height: 180px;
+.livro-genero {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #fcd535;
+  color: black;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.livro-capa {
+  width: 110px;
+  height: 150px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 16px;
+  border-radius: 4px;
+  margin-bottom: 12px;
 }
 
-.no-capa {
-  width: 130px;
-  height: 180px;
-  background: #f2f2f2;
-  color: #aaa;
-  border-radius: 8px;
+.livro-capa-placeholder {
+  width: 110px;
+  height: 150px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  margin-bottom: 16px;
+  color: #9ca3af;
+  font-size: 12px;
 }
 
-.livro-card strong {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1a1a1a;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.livro-card span {
+.livro-titulo {
   font-size: 15px;
-  font-weight: 600;
-  color: #292626;
+  margin-bottom: 6px;
+  text-align: center;
+  color: #000;
+  font-weight: 400; 
+}
+
+
+.livro-preco {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.livro-botao {
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 20px;
+  background: #fcd535;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.livro-botao:hover {
+  background: #ffde59;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  color: #fcd535; /* mesma cor amarelo do destaque */
+  cursor: pointer;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+.edit-icon:hover {
+  color: #ffde59;
+}
+
+.buttons-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: auto; /* empurra para baixo */
+  width: 100%;
+  justify-content: center;
+}
+
+.carrinho-botao {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fcd535;
+  padding: 6px 10px;
+  border-radius: 20px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.carrinho-botao:hover {
+  background: #ffde59;
+  color: #000;
 }
 
 /* Responsividade */
@@ -164,4 +234,58 @@
     font-size: 1.2rem;
     margin-left: 0;
   }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  width: 300px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal form label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.modal form input {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.modal form button {
+  margin-right: 8px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal form button[type="submit"] {
+  background-color: #fcd535;
+  font-weight: 600;
+}
+
+.modal form button[type="button"] {
+  background-color: #ddd;
 }
