@@ -17,7 +17,7 @@ const Login = () => {
         const userName = localStorage.getItem("userName");
         if (localStorage.getItem("userEmail") && userName) {
             setLoggedIn(true);
-            setCurrentName(userName);
+            setCurrentName(userName); 
         }
     }, [navigate]);
 

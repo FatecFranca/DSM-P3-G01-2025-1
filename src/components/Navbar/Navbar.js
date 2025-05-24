@@ -30,7 +30,7 @@ export function Navbar() {
         setUserEmail("");
         setUserName("");
         setShowMenu(false);
-        navigate('/login');
+        navigate('/'); // Redireciona para Home
     };
 
     return (
