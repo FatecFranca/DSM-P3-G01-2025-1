@@ -146,13 +146,12 @@ app.post('/api/livros/:id/avaliacoes', async (req, res) => {
       data: {
         livroId: req.params.id,
         texto: req.body.texto,
-        nota: req.body.nota || null,
-        data: new Date()
+        nota: req.body.nota || null
       }
     });
     res.status(201).json(avaliacao);
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao salvar avaliação' });
+    res.status(500).json({ error: 'Erro ao salvar avaliação', details: error.message });
   }
 });
 
