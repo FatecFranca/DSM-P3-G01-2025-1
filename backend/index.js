@@ -102,8 +102,14 @@ app.post('/api/livros', upload.single('capa'), async (req, res) => {
 
     let capaUrl = '';
     if (req.file) {
-      capaUrl = await uploadToDrive(req.file.path, req.file.originalname);
-      fs.unlinkSync(req.file.path); // Remove o arquivo local após upload
+      // Salva o nome do arquivo local para servir via /uploads
+      capaUrl = req.file.filename;
+      // Opcional: tente enviar para o Drive, mas não dependa disso para cadastrar
+      try {
+        await uploadToDrive(req.file.path, req.file.originalname);
+      } catch (err) {
+        console.warn('Falha ao enviar para o Google Drive:', err.message);
+      }
     }
 
     const livro = await prisma.livros.create({

@@ -19,7 +19,6 @@ function Livros() {
         fetch('http://localhost:3001/api/livros')
             .then(res => res.json())
             .then(data => {
-                // Garante que livros será sempre um array
                 setLivros(Array.isArray(data) ? data : []);
             })
             .catch(() => setLivros([]));
@@ -85,7 +84,18 @@ function Livros() {
                         <select
                             value={genero}
                             onChange={e => setGenero(e.target.value)}
-                            style={{ padding: 8, borderRadius: 6, border: genero ? '2px solid #3b82f6' : '1px solid #ccc', fontSize: 15, color: genero ? '#222' : '#555', fontWeight: genero ? 600 : 400, background: '#fff', outline: genero ? '2px solid #3b82f6' : 'none', boxShadow: genero ? '0 0 0 2px #3b82f633' : 'none', transition: 'border 0.2s, box-shadow 0.2s' }}
+                            style={{
+                                padding: 8,
+                                borderRadius: 6,
+                                border: genero ? '2px solid #3b82f6' : '1px solid #ccc',
+                                fontSize: 15,
+                                color: genero ? '#222' : '#555',
+                                fontWeight: genero ? 600 : 400,
+                                background: '#fff',
+                                outline: genero ? '2px solid #3b82f6' : 'none',
+                                boxShadow: genero ? '0 0 0 2px #3b82f633' : 'none',
+                                transition: 'border 0.2s, box-shadow 0.2s'
+                            }}
                         >
                             <option value="">Todos os gêneros</option>
                             <option value="Romance">Romance</option>
@@ -134,6 +144,7 @@ function Livros() {
                                         src={`http://localhost:3001/uploads/${livro.capa}`}
                                         alt={livro.titulo || 'Capa do livro'}
                                         className="livro-capa"
+                                        style={{ width: 115, height: 165, objectFit: 'cover', borderRadius: 4 }}
                                     />
                                 ) : (
                                     <div className="livro-capa-placeholder">Sem capa</div>
@@ -142,7 +153,6 @@ function Livros() {
                                 <span className="livro-preco">
                                     R$ {Number(livro.preco).toFixed(2)}
                                 </span>
-                                {/* Botões pequenos, logo abaixo da capa */}
                                 <div className="buttons-row">
                                     <button
                                         className="livro-botao"
@@ -169,6 +179,7 @@ function Livros() {
                     </div>
                 </div>
             </div>
+
             {isAdmin && livroEditando && (
                 <div className="modal-overlay" onClick={() => setLivroEditando(null)}>
                     <div className="modal" onClick={e => e.stopPropagation()}>
@@ -200,6 +211,7 @@ function Livros() {
                     </div>
                 </div>
             )}
+
             <div style={{ height: 48 }} />
             <Footer />
         </div>
