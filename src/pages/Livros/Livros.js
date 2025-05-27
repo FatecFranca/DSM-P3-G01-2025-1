@@ -19,7 +19,8 @@ function Livros() {
         fetch('http://localhost:3001/api/livros')
             .then(res => res.json())
             .then(data => {
-                setLivros(data);
+                // Garante que livros será sempre um array
+                setLivros(Array.isArray(data) ? data : []);
             })
             .catch(() => setLivros([]));
     }, []);
@@ -141,6 +142,7 @@ function Livros() {
                                 <span className="livro-preco">
                                     R$ {Number(livro.preco).toFixed(2)}
                                 </span>
+                                {/* Botões pequenos, logo abaixo da capa */}
                                 <div className="buttons-row">
                                     <button
                                         className="livro-botao"
@@ -155,7 +157,7 @@ function Livros() {
                                         className="carrinho-botao"
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            alert(`Livro "${livro.titulo}" adicionado ao carrinho!`);
+                                            alert(`Livro \"${livro.titulo}\" adicionado ao carrinho!`);
                                         }}
                                         aria-label="Adicionar ao carrinho"
                                     >
@@ -198,6 +200,7 @@ function Livros() {
                     </div>
                 </div>
             )}
+            <div style={{ height: 48 }} />
             <Footer />
         </div>
     );

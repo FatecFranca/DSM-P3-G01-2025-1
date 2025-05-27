@@ -41,4 +41,8 @@ model livros {
   capa        String
 }
 
-
+model Autor {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  nome  String
+  foto  String
+}

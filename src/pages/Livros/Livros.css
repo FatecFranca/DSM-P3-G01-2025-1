@@ -124,8 +124,8 @@
 }
 
 .livro-capa {
-  width: 110px;
-  height: 150px;
+  width: 115px;
+  height: 165px;
   object-fit: cover;
   border-radius: 4px;
   margin-bottom: 12px;
