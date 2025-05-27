@@ -8,6 +8,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import pkg from '@prisma/client';
 const { PrismaClient } = pkg;
+import { google } from 'googleapis';
+import fs from 'fs';
 
 const upload = multer({ dest: 'uploads/' });
 const app = express();
@@ -21,6 +23,29 @@ app.use(express.urlencoded({ extended: true }));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Função para upload para o Google Drive
+async function uploadToDrive(filePath, fileName) {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: 'backend/drive-credentials.json', // ajuste o caminho se necessário
+    scopes: ['https://www.googleapis.com/auth/drive.file'],
+  });
+  const drive = google.drive({ version: 'v3', auth });
+  const fileMetadata = {
+    name: fileName,
+    parents: ['1W1c4GrXCvslcR8zziKeaNdS3ZaraMZBJ'], // ID da sua pasta no Drive
+  };
+  const media = {
+    mimeType: 'image/jpeg', // ou o tipo correto
+    body: fs.createReadStream(filePath),
+  };
+  const response = await drive.files.create({
+    resource: fileMetadata,
+    media: media,
+    fields: 'id,webContentLink',
+  });
+  return response.data.webContentLink;
+}
 
 // Rota para cadastrar cliente
 app.post('/api/clientes', async (req, res) => {
@@ -69,13 +94,23 @@ app.post('/api/livros', upload.single('capa'), async (req, res) => {
       editora = 'Editora desconhecida',
       isbn = String(Date.now()),
       ano = new Date().getFullYear(),
-      genero = req.body.categoria || 'Outros',
+      genero = req.body.genero || req.body.categoria || 'Outros',
       preco = 0,
       quantidade = 1,
-      sinopse = req.body.descricao || '',
+      sinopse = req.body.descricao || req.body.sinopse || '',
     } = req.body;
 
-    const capa = req.file ? req.file.filename : '';
+    let capaUrl = '';
+    if (req.file) {
+      // Salva o nome do arquivo local para servir via /uploads
+      capaUrl = req.file.filename;
+      // Opcional: tente enviar para o Drive, mas não dependa disso para cadastrar
+      try {
+        await uploadToDrive(req.file.path, req.file.originalname);
+      } catch (err) {
+        console.warn('Falha ao enviar para o Google Drive:', err.message);
+      }
+    }
 
     const livro = await prisma.livros.create({
       data: {
@@ -88,7 +123,7 @@ app.post('/api/livros', upload.single('capa'), async (req, res) => {
         preco: parseFloat(preco),
         quantidade: parseInt(quantidade),
         sinopse,
-        capa
+        capa: capaUrl
       },
     });
 
@@ -146,13 +181,40 @@ app.post('/api/livros/:id/avaliacoes', async (req, res) => {
       data: {
         livroId: req.params.id,
         texto: req.body.texto,
-        nota: req.body.nota || null,
-        data: new Date()
+        nota: req.body.nota || null
       }
     });
     res.status(201).json(avaliacao);
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao salvar avaliação' });
+    res.status(500).json({ error: 'Erro ao salvar avaliação', details: error.message });
+  }
+});
+
+// --- NOVO: Cadastro de autor ---
+app.post('/api/autores', upload.single('foto'), async (req, res) => {
+  try {
+    const { nome } = req.body;
+    let foto = '';
+    if (req.file) {
+      foto = `/uploads/${req.file.filename}`;
+    }
+    // Salva o autor no banco de dados
+    const autor = await prisma.autor.create({
+      data: { nome, foto }
+    });
+    res.status(201).json(autor);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao cadastrar autor', details: error.message });
+  }
+});
+
+// Listar autores
+app.get('/api/autores', async (req, res) => {
+  try {
+    const autores = await prisma.autor.findMany();
+    res.json(autores);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar autores', details: error.message });
   }
 });
 
