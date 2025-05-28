@@ -7,6 +7,7 @@
   }
   
   
+  
   .lit {
     width: 100%; 
     max-width: 1200px; 
@@ -14,7 +15,54 @@
     box-shadow: 2px 2px 10px rgba(85, 79, 79, 0.1); 
     transition: transform 0.3s ease; 
   }
+
+
+  .DomCas {
+    width: 25%;    
+    border-radius: 10px;   
+  }
+
+    .Vereda {
+    width: 25%;  
+    border-radius: 10px;   
+  }
   
+  .Cortico {
+    width: 25%; 
+    border-radius: 10px;   
+  }
+
+    .Clarice {
+    width: 25%; 
+    border-radius: 10px;   
+  }
+
+     .Paulo {
+    width: 25%; 
+    border-radius: 10px;   
+  }
+  
+     .Milton {
+    width: 25%; 
+    border-radius: 10px;   
+  }
+    
+     .Memorias {
+    width: 25%; 
+    border-radius: 10px;   
+  }
+      
+     .Vidas {
+    width: 25%; 
+    border-radius: 10px;   
+  }
+        
+     .Tempo {
+    width: 25%; 
+    border-radius: 10px;   
+  }
+
+
   .lit:hover {
     transform: scale(1.05); 
   }
@@ -43,6 +91,7 @@
       /*margin-top: 1rem;*/
       margin-top: 3%;
       margin-bottom: 3%;
+      text-align: justify;
     }
     
     /* Link estilizado para voltar à home */
@@ -93,3 +142,4 @@
     margin-right: 10%;
   
     }
+
