@@ -80,7 +80,7 @@ export function Navbar() {
                         )}
 
                     </div>
-                    <div className="carrinho-icon" style={{ marginLeft: 0 }}>
+                    <div className="carrinho-icon" style={{ marginLeft: 0, cursor: 'pointer' }} onClick={() => navigate('/carrinho')}>
                         <img src={Carrinho} alt="Ícone de Carrinho de Compras" />
                     </div>
                 </div>

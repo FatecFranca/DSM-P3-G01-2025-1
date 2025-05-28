@@ -155,6 +155,21 @@ function Livros() {
                                         className="carrinho-botao"
                                         onClick={(e) => {
                                             e.stopPropagation();
+                                            // Adiciona o livro ao carrinho no localStorage
+                                            const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+                                            // Verifica se o livro já está no carrinho
+                                            const existente = carrinho.find(item => item.id === livro.id);
+                                            if (existente) {
+                                                existente.quantidade += 1;
+                                            } else {
+                                                carrinho.push({
+                                                    id: livro.id,
+                                                    titulo: livro.titulo,
+                                                    preco: livro.preco,
+                                                    quantidade: 1
+                                                });
+                                            }
+                                            localStorage.setItem('carrinho', JSON.stringify(carrinho));
                                             alert(`Livro "${livro.titulo}" adicionado ao carrinho!`);
                                         }}
                                         aria-label="Adicionar ao carrinho"
