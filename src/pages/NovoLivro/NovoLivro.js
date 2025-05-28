@@ -50,10 +50,6 @@ const NovoLivro = () => {
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="form-row">
               <div className="input-group">
-                <label className="input-label">ID *</label>
-                <input type="text" name="id" className="input-field" required onChange={handleChange} />
-              </div>
-              <div className="input-group">
                 <label className="input-label">Título *</label>
                 <input type="text" name="titulo" className="input-field" required onChange={handleChange} />
               </div>

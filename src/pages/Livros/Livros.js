@@ -19,7 +19,7 @@ function Livros() {
         fetch('http://localhost:3001/api/livros')
             .then(res => res.json())
             .then(data => {
-                setLivros(data);
+                setLivros(Array.isArray(data) ? data : []);
             })
             .catch(() => setLivros([]));
     }, []);
@@ -84,7 +84,18 @@ function Livros() {
                         <select
                             value={genero}
                             onChange={e => setGenero(e.target.value)}
-                            style={{ padding: 8, borderRadius: 6, border: genero ? '2px solid #3b82f6' : '1px solid #ccc', fontSize: 15, color: genero ? '#222' : '#555', fontWeight: genero ? 600 : 400, background: '#fff', outline: genero ? '2px solid #3b82f6' : 'none', boxShadow: genero ? '0 0 0 2px #3b82f633' : 'none', transition: 'border 0.2s, box-shadow 0.2s' }}
+                            style={{
+                                padding: 8,
+                                borderRadius: 6,
+                                border: genero ? '2px solid #3b82f6' : '1px solid #ccc',
+                                fontSize: 15,
+                                color: genero ? '#222' : '#555',
+                                fontWeight: genero ? 600 : 400,
+                                background: '#fff',
+                                outline: genero ? '2px solid #3b82f6' : 'none',
+                                boxShadow: genero ? '0 0 0 2px #3b82f633' : 'none',
+                                transition: 'border 0.2s, box-shadow 0.2s'
+                            }}
                         >
                             <option value="">Todos os gêneros</option>
                             <option value="Romance">Romance</option>
@@ -133,6 +144,7 @@ function Livros() {
                                         src={`http://localhost:3001/uploads/${livro.capa}`}
                                         alt={livro.titulo || 'Capa do livro'}
                                         className="livro-capa"
+                                        style={{ width: 115, height: 165, objectFit: 'cover', borderRadius: 4 }}
                                     />
                                 ) : (
                                     <div className="livro-capa-placeholder">Sem capa</div>
@@ -152,36 +164,37 @@ function Livros() {
                                         Ver mais
                                     </button>
                                     <button
-                                        className="carrinho-botao"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            // Adiciona o livro ao carrinho no localStorage
-                                            const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-                                            // Verifica se o livro já está no carrinho
-                                            const existente = carrinho.find(item => item.id === livro.id);
-                                            if (existente) {
-                                                existente.quantidade += 1;
-                                            } else {
-                                                carrinho.push({
-                                                    id: livro.id,
-                                                    titulo: livro.titulo,
-                                                    preco: livro.preco,
-                                                    quantidade: 1
-                                                });
-                                            }
-                                            localStorage.setItem('carrinho', JSON.stringify(carrinho));
-                                            alert(`Livro "${livro.titulo}" adicionado ao carrinho!`);
-                                        }}
-                                        aria-label="Adicionar ao carrinho"
-                                    >
-                                        <FiShoppingCart size={18} />
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+                        className="carrinho-botao"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            // Adiciona o livro ao carrinho no localStorage
+                            const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+                            // Verifica se o livro já está no carrinho
+                            const existente = carrinho.find(item => item.id === livro.id);
+                            if (existente) {
+                            existente.quantidade += 1;
+                            } else {
+                            carrinho.push({
+                                id: livro.id,
+                                titulo: livro.titulo,
+                                preco: livro.preco,
+                                quantidade: 1
+                            });
+                            }
+                            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+                            alert(`Livro "${livro.titulo}" adicionado ao carrinho!`);
+                        }}
+                        aria-label="Adicionar ao carrinho"
+                        >
+                        <FiShoppingCart size={18} />
+                        </button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
             {isAdmin && livroEditando && (
                 <div className="modal-overlay" onClick={() => setLivroEditando(null)}>
                     <div className="modal" onClick={e => e.stopPropagation()}>
@@ -213,6 +226,8 @@ function Livros() {
                     </div>
                 </div>
             )}
+
+            <div style={{ height: 48 }} />
             <Footer />
         </div>
     );
