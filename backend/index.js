@@ -113,18 +113,10 @@ app.get('/api/livros', async (req, res) => {
 app.get('/api/livros/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    // Verifica se o id é um ObjectId válido (24 caracteres hexadecimais)
-    if (!/^[a-fA-F0-9]{24}$/.test(id)) {
-      // Tenta buscar por ISBN se não for um ObjectId válido
-      const livro = await prisma.livros.findFirst({ where: { isbn: id } });
-      if (!livro) return res.status(404).json({ error: 'Livro não encontrado' });
-      return res.json(livro);
-    } else {
-      let livro = await prisma.livros.findUnique({ where: { id } });
-      if (!livro) livro = await prisma.livros.findFirst({ where: { isbn: id } });
-      if (!livro) return res.status(404).json({ error: 'Livro não encontrado' });
-      return res.json(livro);
-    }
+    let livro = await prisma.livros.findUnique({ where: { id } });
+    if (!livro) livro = await prisma.livros.findFirst({ where: { isbn: id } });
+    if (!livro) return res.status(404).json({ error: 'Livro não encontrado' });
+    res.json(livro);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar livro', details: error.message });
   }
