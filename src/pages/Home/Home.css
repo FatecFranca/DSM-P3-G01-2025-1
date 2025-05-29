@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 6rem;
+    margin-top: 7.5rem;
 }
 
 .img-destaque {
@@ -28,9 +28,11 @@
 }
 
 .text-destaque {
-    margin-bottom: 0;
     margin-top: 0;
-    font-size: 70%;
+    margin-bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
 }
 
 .text-destaque h1 {
@@ -39,9 +41,19 @@
     font-weight: bold;
     padding: 10px; 
     border-radius: 22px; 
-    text-align: center;
-    margin-right: 90%;
-    margin-top: 5%;
+    text-align: left;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: fit-content;
+}
+
+@media (max-width: 600px) {
+    .text-destaque h1 {
+        font-size: 1.2rem;
+        margin-left: 0;
+        margin-top: 0;
+    }
 }
 
 .text-products h2 {

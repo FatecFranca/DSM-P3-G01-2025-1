@@ -74,9 +74,9 @@ function Livros() {
             <Navbar />
             <div className='livros-body'>
                 <div className='text-destaque'>
-                    <h1>DESTAQUE</h1>
+                    
                 </div>
-                <div className='img-destaque'>
+                <div className='img-destaque' style={{ marginTop: 32 }}>
                     <img src={Destaque} alt="Destaque" className="destaque" />
                 </div>
                 <div className='text-products'>

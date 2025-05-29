@@ -7,12 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Avaliacao {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  nota       Int
-  texto      String
-  livroId    String   @db.ObjectId
-  livro      livros   @relation(fields: [livroId], references: [id])
+model avaliacoes {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
 model clientes {
@@ -43,11 +39,6 @@ model livros {
   quantidade  Int
   sinopse     String
   capa        String
-  avaliacoes  Avaliacao[]
 }
 
-model Autor {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  nome  String
-  foto  String
-}
+

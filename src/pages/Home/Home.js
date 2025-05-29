@@ -68,6 +68,9 @@ function Home() {
       .catch(() => alert('Erro ao cadastrar autor.'));
   }
 
+  // Garante que autores é sempre array para evitar erro de .map
+  const autoresArray = Array.isArray(autores) ? autores : [];
+
   return (
     <div className="home-content">
       <Faixa />
@@ -151,8 +154,7 @@ function Home() {
               </div>
             </div>
           )}
-
-          {autores.map((autor, idx) => (
+          {autoresArray.map((autor, idx) => (
             <div key={idx} className="autor-card" style={{ minWidth: 120, minHeight: 150, borderRadius: '50%', overflow: 'visible', display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: 12 }}>
               <div className="autor-foto" style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', background: '#f3f3f3', border: '2px solid #eee', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {autor.foto ? (

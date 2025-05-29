@@ -8,7 +8,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import pkg from '@prisma/client';
 const { PrismaClient } = pkg;
-import { google } from 'googleapis';
 import fs from 'fs';
 
 const upload = multer({ dest: 'uploads/' });
