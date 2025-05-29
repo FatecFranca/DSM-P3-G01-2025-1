@@ -13,7 +13,6 @@ function Livros() {
     const [filtro, setFiltro] = useState("");
     const [genero, setGenero] = useState("");
 
-    // Estados para edição
     const [livroEditando, setLivroEditando] = useState(null);
     const [formData, setFormData] = useState({ titulo: '', preco: '' });
 
@@ -31,7 +30,6 @@ function Livros() {
             .catch(() => setLivros([]));
     }, []);
 
-    // Filtro por título, autor ou gênero
     const livrosFiltrados = Array.isArray(livros) ? livros.filter(livro => {
         const busca = filtro.toLowerCase();
         const generoBusca = genero;
@@ -41,7 +39,6 @@ function Livros() {
         );
     }) : [];
 
-    // Função para abrir modal de edição
     const abrirEdicao = (livro) => {
         setLivroEditando(livro);
         setFormData({
@@ -50,9 +47,7 @@ function Livros() {
         });
     };
 
-    // Função para salvar edição (aqui só atualiza localmente, você pode adaptar para API)
     const salvarEdicao = () => {
-        // Atualiza o livro na lista local (exemplo simples)
         setLivros((prevLivros) =>
             prevLivros.map(l =>
                 l.id === livroEditando.id ? { ...l, titulo: formData.titulo, preco: formData.preco } : l
@@ -61,7 +56,6 @@ function Livros() {
         setLivroEditando(null);
     };
 
-    // Lista dos e-mails admins (centralizada, igual Cadastro.js)
     const adminEmails = [
         'anajuliaalvesmota@gmail.com',
         'lauanegabtoledo@gmail.com',
@@ -70,7 +64,6 @@ function Livros() {
         'pedrohcsilva77@gmail.com'
     ];
 
-    // Busca o e-mail do usuário logado (pode estar como 'userEmail', 'usuarioEmail' ou 'email')
     let usuarioEmail = localStorage.getItem('userEmail') || localStorage.getItem('usuarioEmail') || localStorage.getItem('email');
     usuarioEmail = usuarioEmail ? usuarioEmail.trim().toLowerCase() : '';
     const isAdmin = adminEmails.includes(usuarioEmail);
@@ -87,7 +80,6 @@ function Livros() {
                     <img src={Destaque} alt="Destaque" className="destaque" />
                 </div>
                 <div className='text-products'>
-                    {/* Filtro */}
                     <div style={{ display: 'flex', gap: 16, marginBottom: 32, alignItems: 'center' }}>
                         <input
                             type="text"
@@ -99,7 +91,18 @@ function Livros() {
                         <select
                             value={genero}
                             onChange={e => setGenero(e.target.value)}
-                            style={{ padding: 8, borderRadius: 6, border: genero ? '2px solid #3b82f6' : '1px solid #ccc', fontSize: 15, color: genero ? '#222' : '#555', fontWeight: genero ? 600 : 400, background: '#fff', outline: genero ? '2px solid #3b82f6' : 'none', boxShadow: genero ? '0 0 0 2px #3b82f633' : 'none', transition: 'border 0.2s, box-shadow 0.2s' }}
+                            style={{
+                                padding: 8,
+                                borderRadius: 6,
+                                border: genero ? '2px solid #3b82f6' : '1px solid #ccc',
+                                fontSize: 15,
+                                color: genero ? '#222' : '#555',
+                                fontWeight: genero ? 600 : 400,
+                                background: '#fff',
+                                outline: genero ? '2px solid #3b82f6' : 'none',
+                                boxShadow: genero ? '0 0 0 2px #3b82f633' : 'none',
+                                transition: 'border 0.2s, box-shadow 0.2s'
+                            }}
                         >
                             <option value="">Todos os gêneros</option>
                             <option value="Romance">Romance</option>
@@ -122,7 +125,6 @@ function Livros() {
                         alignItems: 'flex-start',
                         marginTop: '2rem',
                     }}>
-                        {/* Só admins veem o card para inserir novo livro */}
                         {isAdmin && (
                             <div className="add-livro-card" onClick={() => navigate('/novo-livro')}>
                                 <span className="plus-icon">+</span>
@@ -141,7 +143,6 @@ function Livros() {
                                     <span className="livro-genero">{livro.genero}</span>
                                 )}
 
-                                {/* Ícone lápis só para admins */}
                                 {isAdmin && (
                                     <div className="edit-icon" onClick={e => { e.stopPropagation(); abrirEdicao(livro); }}>
                                         <FiEdit size={18} />
@@ -153,6 +154,7 @@ function Livros() {
                                         src={`http://localhost:3001/uploads/${livro.capa}`}
                                         alt={livro.titulo || 'Capa do livro'}
                                         className="livro-capa"
+                                        style={{ width: 115, height: 165, objectFit: 'cover', borderRadius: 4 }}
                                     />
                                 ) : (
                                     <div className="livro-capa-placeholder">Sem capa</div>
@@ -173,11 +175,23 @@ function Livros() {
                                     >
                                         Ver mais
                                     </button>
-                                    {/* Ícone carrinho ao lado do botão */}
                                     <button
                                         className="carrinho-botao"
                                         onClick={(e) => {
                                             e.stopPropagation();
+                                            const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+                                            const existente = carrinho.find(item => item.id === livro.id);
+                                            if (existente) {
+                                                existente.quantidade += 1;
+                                            } else {
+                                                carrinho.push({
+                                                    id: livro.id,
+                                                    titulo: livro.titulo,
+                                                    preco: livro.preco,
+                                                    quantidade: 1
+                                                });
+                                            }
+                                            localStorage.setItem('carrinho', JSON.stringify(carrinho));
                                             alert(`Livro "${livro.titulo}" adicionado ao carrinho!`);
                                         }}
                                         aria-label="Adicionar ao carrinho"
@@ -191,7 +205,6 @@ function Livros() {
                 </div>
             </div>
 
-            {/* Modal de edição só aparece para admins */}
             {isAdmin && livroEditando && (
                 <div className="modal-overlay" onClick={() => setLivroEditando(null)}>
                     <div className="modal" onClick={e => e.stopPropagation()}>

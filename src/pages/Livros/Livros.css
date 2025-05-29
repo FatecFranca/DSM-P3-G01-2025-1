@@ -66,7 +66,7 @@
 
 .add-livro-card {
   width: 200px;
-  height: 300px;
+  height: 330px;
   box-sizing: border-box;
   border: 1px dashed #9ca3af;
   border-radius: 10px;
@@ -96,7 +96,7 @@
   border-radius: 10px;
   padding: 16px;
   width: 200px;
-  height: 300px;
+  height: 330px;
   background: #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   display: flex;
@@ -124,8 +124,8 @@
 }
 
 .livro-capa {
-  width: 110px;
-  height: 150px;
+  width: 115px;
+  height: 165px;
   object-fit: cover;
   border-radius: 4px;
   margin-bottom: 12px;
@@ -158,7 +158,7 @@
   font-weight: 500;
   color: #000;
   font-weight: bold;
-  margin-bottom: 12px;
+  margin-top: 12px;
 }
 
 .livro-botao {
@@ -170,6 +170,7 @@
   border: none;
   cursor: pointer;
   transition: background 0.2s ease;
+  
 }
 
 .livro-botao:hover {
@@ -197,6 +198,7 @@
   margin-top: auto; /* empurra para baixo */
   width: 100%;
   justify-content: center;
+  
 }
 
 .carrinho-botao {
