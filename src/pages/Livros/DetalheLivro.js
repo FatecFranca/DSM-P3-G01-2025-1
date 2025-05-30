@@ -47,7 +47,71 @@ const DetalheLivro = () => {
       .then(data => setAvaliacoes(data));
   };
 
-  // Média das notas
+  const adicionarAoCarrinho = () => {
+    const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const livroExistente = carrinhoAtual.find(item => item.id === livro.id);
+    
+    if (livroExistente) {
+      livroExistente.quantidade += 1;
+    } else {
+      carrinhoAtual.push({
+        ...livro,
+        quantidade: 1,
+        capa: livro.capa 
+      });
+    }
+    
+    localStorage.setItem('carrinho', JSON.stringify(carrinhoAtual));
+    
+    const modal = document.createElement('div');
+    modal.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 1000;
+        text-align: center;
+        width: 300px;
+      ">
+        <p style="margin-bottom: 15px; font-size: 16px;">
+          ✅ Livro <strong>"${livro.titulo}"</strong> adicionado ao carrinho!
+        </p>
+        <button style="
+          background: #ffde59;
+          color: black;
+          border: none;
+          padding: 8px 15px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-weight: bold;
+          width: 100%;
+        ">
+          OK
+        </button>
+      </div>
+      <div style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+      "></div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    modal.querySelector('button').addEventListener('click', () => {
+      modal.remove();
+    });
+  };
+
   const media = avaliacoes.length > 0 ? (avaliacoes.reduce((acc, a) => acc + (a.nota || 0), 0) / avaliacoes.length).toFixed(1) : 0;
 
   if (loading) return <div>Carregando...</div>;
@@ -72,7 +136,6 @@ const DetalheLivro = () => {
         padding: 48,
         minHeight: 420,
       }}>
-        {/* Capa do livro */}
         <div style={{ flex: '0 0 320px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {livro.capa && (
             <img
@@ -82,7 +145,6 @@ const DetalheLivro = () => {
             />
           )}
         </div>
-        {/* Informações do livro + sinopse separada */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'row', gap: 32, minWidth: 320 }}>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
             <h2 style={{ marginBottom: 10, color: '#292626', fontWeight: 700, fontSize: 32 }}>{livro.titulo || livro.nome}</h2>
@@ -96,12 +158,11 @@ const DetalheLivro = () => {
               <span style={{
                 color: '#292626',
                 fontWeight: 'bold',
-                fontSize: 32 // Aumenta o tamanho do preço
+                fontSize: 32
               }}>
                 R$ {Number(livro.preco).toFixed(2)}
               </span>
             </div>
-            {/* Botões */}
             <div style={{ display: 'flex', gap: 24, marginTop: 12 }}>
               <button
                 onClick={() => navigate('/comprar')}
@@ -121,6 +182,7 @@ const DetalheLivro = () => {
                 Comprar agora
               </button>
               <button
+                onClick={adicionarAoCarrinho}
                 style={{
                   background: '#fff',
                   color: '#292626',
@@ -141,7 +203,6 @@ const DetalheLivro = () => {
               </button>
             </div>
           </div>
-          {/* Sinopse separada */}
           <div style={{ 
             flex: 1, 
             borderRadius: 10, 
@@ -154,8 +215,8 @@ const DetalheLivro = () => {
             height: 'fit-content',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start', // alinha no topo
-            alignItems: 'flex-start', // alinha à esquerda
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
             background: 'none'
           }}>
             <b>Sinopse:</b> <br />
@@ -163,7 +224,6 @@ const DetalheLivro = () => {
           </div>
         </div>
       </div>
-      {/* Aba de avaliações */}
       <div style={{
         maxWidth: '90vw',
         width: '100%',
@@ -222,7 +282,6 @@ const DetalheLivro = () => {
             {enviando ? 'Enviando...' : 'Enviar avaliação'}
           </button>
         </form>
-        {/* Avaliações recebidas */}
         {avaliacoes.length > 0 && (
           <>
             <h3 style={{ color: '#292626', fontWeight: 700, fontSize: 22, marginBottom: 12 }}>Avaliações</h3>

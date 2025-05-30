@@ -20,7 +20,6 @@ function Livros() {
         fetch('http://localhost:3001/api/livros')
             .then(res => res.json())
             .then(data => {
-                // Garante que só aceita array, senão mostra lista vazia
                 if (Array.isArray(data)) {
                     setLivros(data);
                 } else {
@@ -185,14 +184,69 @@ function Livros() {
                                                 existente.quantidade += 1;
                                             } else {
                                                 carrinho.push({
-                                                    id: livro.id,
-                                                    titulo: livro.titulo,
-                                                    preco: livro.preco,
-                                                    quantidade: 1
+                                                    ...livro,
+                                                    quantidade: 1,
+                                                    capa: livro.capa 
                                                 });
                                             }
+
                                             localStorage.setItem('carrinho', JSON.stringify(carrinho));
-                                            alert(`Livro "${livro.titulo}" adicionado ao carrinho!`);
+                                            const modal = document.createElement('div');
+                                            modal.innerHTML = `
+                                                <div style="
+                                                    position: fixed;
+                                                    top: 50%;
+                                                    left: 50%;
+                                                    transform: translate(-50%, -50%);
+                                                    background: white;
+                                                    padding: 20px;
+                                                    border-radius: 8px;
+                                                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                                                    z-index: 1000;
+                                                    text-align: center;
+                                                    max-width: 80%;
+                                                ">
+                                                    <p style="margin-bottom: 15px; font-size: 16px;">
+                                                        ✅ Livro <strong>"${livro.titulo}"</strong> adicionado ao carrinho!
+                                                    </p>
+                                                    <button style="
+                                                        background: #ffc107;
+                                                        color: black;
+                                                        border: none;
+                                                        padding: 8px 15px;
+                                                        border-radius: 4px;
+                                                        cursor: pointer;
+                                                        font-weight: bold;
+                                                    ">
+                                                        OK
+                                                    </button>
+                                                </div>
+                                                <div style="
+                                                    position: fixed;
+                                                    top: 0;
+                                                    left: 0;
+                                                    width: 100%;
+                                                    height: 100%;
+                                                    background: rgba(0,0,0,0.5);
+                                                    z-index: 999;
+                                                "></div>
+                                            `;
+                                            document.body.appendChild(modal);
+                                            modal.querySelector('button').addEventListener('click', () => {
+                                                modal.remove();
+                                            });
+                                            modal.querySelector('div').addEventListener('click', (e) => {
+                                                if (e.target === modal.querySelector('div')) {
+                                                    modal.remove();
+                                                }
+                                            });
+
+
+                                            setTimeout(() => {
+                                                if (document.body.contains(modal)) {
+                                                    modal.remove();
+                                                }
+                                            }, 3000);
                                         }}
                                         aria-label="Adicionar ao carrinho"
                                     >

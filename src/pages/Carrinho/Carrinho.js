@@ -19,7 +19,7 @@ const Carrinho = () => {
 
     const updateQuantity = (index, newQuantity) => {
         if (newQuantity < 1) return;
-        
+
         const newCartItems = [...cartItems];
         newCartItems[index].quantidade = newQuantity;
         setCartItems(newCartItems);
@@ -34,8 +34,9 @@ const Carrinho = () => {
     };
 
     const calculateTotal = () => {
-        return cartItems.reduce((total, item) => 
-            total + (item.preco * item.quantidade), 0).toFixed(2);
+        return cartItems
+            .reduce((total, item) => total + item.preco * item.quantidade, 0)
+            .toFixed(2);
     };
 
     const handleCheckout = () => {
@@ -44,6 +45,15 @@ const Carrinho = () => {
 
     const continueShopping = () => {
         navigate('/livros');
+    };
+    const getCapaUrl = (capa) => {
+        if (!capa || typeof capa !== 'string' || capa.trim() === '') {
+            return null; // sem capa
+        }
+        if (capa.startsWith('http') || capa.startsWith('https')) {
+            return capa;
+        }
+        return `http://localhost:3001/uploads/${capa}`;
     };
 
     return (
@@ -68,46 +78,60 @@ const Carrinho = () => {
                         </div>
                     ) : (
                         <>
-                            {cartItems.map((item, index) => (
-                                <div key={index} className="carrinho-item">
-                                    <div className="item-image">
-                                        {item.capa ? (
-                                            <img 
-                                                src={`http://localhost:3001/uploads/${item.capa}`} 
-                                                alt={item.titulo} 
-                                            />
-                                        ) : (
-                                            <div className="livro-capa-placeholder">Sem capa</div>
-                                        )}
-                                    </div>
-                                    <div className="item-details">
-                                        <h3>{item.titulo}</h3>
-                                        <p className="autor">{item.autor}</p>
-                                        <p className="preco">R$ {item.preco.toFixed(2)}</p>
-                                        
-                                        <div className="quantity-control">
-                                            <button 
-                                                onClick={() => updateQuantity(index, item.quantidade - 1)}
-                                                disabled={item.quantidade <= 1}
-                                            >
-                                                <FaMinus />
-                                            </button>
-                                            <span>{item.quantidade}</span>
-                                            <button 
-                                                onClick={() => updateQuantity(index, item.quantidade + 1)}
-                                            >
-                                                <FaPlus />
-                                            </button>
+                            {cartItems.map((item, index) => {
+                                const capaUrl = getCapaUrl(item.capa);
+                                return (
+                                    <div key={index} className="carrinho-item">
+                                        <div className="item-image">
+                                            {capaUrl ? (
+                                                <img
+                                                    src={capaUrl}
+                                                    alt={item.titulo}
+                                                    onError={(e) => {
+                                                        e.target.style.display = 'none';
+                                                        if (!e.target.parentNode.querySelector('.livro-capa-placeholder')) {
+                                                            const fallback = document.createElement('div');
+                                                            fallback.className = 'livro-capa-placeholder';
+                                                            fallback.textContent = 'Sem capa';
+                                                            e.target.parentNode.appendChild(fallback);
+                                                        }
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div className="livro-capa-placeholder">Sem capa</div>
+                                            )}
                                         </div>
+
+                                        <div className="item-details">
+                                            <h3>{item.titulo}</h3>
+                                            <p className="autor">{item.autor}</p>
+                                            <p className="preco">R$ {item.preco.toFixed(2)}</p>
+
+                                            <div className="quantity-control">
+                                                <button
+                                                    onClick={() => updateQuantity(index, item.quantidade - 1)}
+                                                    disabled={item.quantidade <= 1}
+                                                >
+                                                    <FaMinus />
+                                                </button>
+                                                <span>{item.quantidade}</span>
+                                                <button
+                                                    onClick={() => updateQuantity(index, item.quantidade + 1)}
+                                                >
+                                                    <FaPlus />
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            onClick={() => removeFromCart(index)}
+                                            className="remove-btn"
+                                        >
+                                            <FaTrash />
+                                        </button>
                                     </div>
-                                    <button 
-                                        onClick={() => removeFromCart(index)}
-                                        className="remove-btn"
-                                    >
-                                        <FaTrash />
-                                    </button>
-                                </div>
-                            ))}
+                                );
+                            })}
 
                             <div className="carrinho-summary">
                                 <div className="carrinho-total">
@@ -115,10 +139,7 @@ const Carrinho = () => {
                                     <span>R$ {calculateTotal()}</span>
                                 </div>
 
-                                <button 
-                                    onClick={handleCheckout} 
-                                    className="checkout-btn"
-                                >
+                                <button onClick={handleCheckout} className="checkout-btn">
                                     Finalizar Compra
                                 </button>
                             </div>
