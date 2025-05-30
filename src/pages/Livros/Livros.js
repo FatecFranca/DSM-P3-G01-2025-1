@@ -5,7 +5,7 @@ import '../../pages/Livros/Livros.css';
 import Footer from '../../components/Footer/Footer.js';
 import { Navbar } from '../../components/Navbar/Navbar.js';
 import { Faixa } from '../../components/Faixa/Faixa.js';
-import { FiEdit, FiShoppingCart } from 'react-icons/fi';
+import { FiEdit, FiShoppingCart, FiTrash2 } from 'react-icons/fi';
 
 function Livros() {
     const navigate = useNavigate();
@@ -146,6 +146,37 @@ function Livros() {
                                     <div className="edit-icon" onClick={e => { e.stopPropagation(); abrirEdicao(livro); }}>
                                         <FiEdit size={18} />
                                     </div>
+                                )}
+
+                                {isAdmin && (
+                                    <button
+                                        className="excluir-botao-minimalista"
+                                        style={{
+                                            position: 'absolute',
+                                            left: 8,
+                                            bottom: 8,
+                                            background: 'transparent',
+                                            color: '#ff4d4f',
+                                            border: 'none',
+                                            borderRadius: '50%',
+                                            padding: 0,
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            zIndex: 10
+                                        }}
+                                        onClick={e => {
+                                            e.stopPropagation();
+                                            if (window.confirm('Tem certeza que deseja excluir este livro?')) {
+                                                // Chame a função de exclusão aqui
+                                                // Exemplo: handleExcluirLivro(livro.id)
+                                            }
+                                        }}
+                                        title="Excluir livro"
+                                    >
+                                        <FiTrash2 size={18} />
+                                    </button>
                                 )}
 
                                 {livro.capa ? (
