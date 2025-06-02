@@ -13,10 +13,10 @@ const Footer = () => {
           <div className="footer-links-column">
             <h3>Links</h3>
             <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Livros</a></li>
-              <li><a href="LiteraturaBrasileira.js">Literatura Brasileira</a></li>
-              <li><a href="Sobre.js">Sobre Nós</a></li>
+              <li><a href="/">Home</a></li>
+              <li><a href="/livros">Livros</a></li>
+              <li><a href="/literatura-brasileira">Literatura Brasileira</a></li>
+              <li><a href="/sobre">Sobre Nós</a></li>
             </ul>
           </div>
 
