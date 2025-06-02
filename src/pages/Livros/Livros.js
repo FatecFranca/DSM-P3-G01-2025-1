@@ -55,6 +55,16 @@ function Livros() {
         setLivroEditando(null);
     };
 
+    // Função para excluir livro
+    const handleExcluirLivro = async (id) => {
+        try {
+            await fetch(`http://localhost:3001/api/livros/${id}`, { method: 'DELETE' });
+            setLivros(prev => prev.filter(l => l.id !== id));
+        } catch (error) {
+            alert('Erro ao excluir livro');
+        }
+    };
+
     const adminEmails = [
         'anajuliaalvesmota@gmail.com',
         'lauanegabtoledo@gmail.com',
@@ -169,8 +179,7 @@ function Livros() {
                                         onClick={e => {
                                             e.stopPropagation();
                                             if (window.confirm('Tem certeza que deseja excluir este livro?')) {
-                                                // Chame a função de exclusão aqui
-                                                // Exemplo: handleExcluirLivro(livro.id)
+                                                handleExcluirLivro(livro.id);
                                             }
                                         }}
                                         title="Excluir livro"

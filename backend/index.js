@@ -209,6 +209,18 @@ app.get('/api/autores', async (req, res) => {
   }
 });
 
+// Remover livro
+app.delete('/api/livros/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    // Remove o livro do banco de dados
+    await prisma.livros.delete({ where: { id } });
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao excluir livro', details: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
