@@ -13,6 +13,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './index.css'; 
 import Carrinho from '../src/pages/Carrinho/Carrinho';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Autores from './pages/Autores/Autores';
+import Usuarios from './pages/Usuarios/Usuarios';
 
 
 function App() {
@@ -27,10 +30,11 @@ function App() {
                 <Route path="/sobre" element={<Sobre/>} />
                 <Route path="/literatura-brasileira" element={<LiteraturaBrasileira />} />
                 <Route path="/novo-livro" element={<NovoLivro />} />
-
                 <Route path="/comprar" element={<div style={{padding: 40, textAlign: 'center'}}>Tela de compra (em branco)</div>} />
                 <Route path="/carrinho" element={<Carrinho />} />
- 
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/autores" element={<Autores />} />
+                <Route path="/usuarios" element={<Usuarios />} />
             </Routes>
         </Router>
     );

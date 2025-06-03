@@ -1,0 +1,53 @@
+/* Usuarios.css */
+.usuarios-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: #f9f9f9;
+}
+
+.usuarios-title {
+  margin-top: 48px;
+  font-size: 2rem;
+  color: #222;
+  font-weight: 700;
+  text-align: center;
+}
+
+.usuarios-lista {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.usuario-item {
+  background: #fffbe7;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #fcd53522;
+  padding: 18px 24px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+  gap: 4px;
+}
+
+.usuario-email {
+  color: #888;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 700px) {
+  .usuarios-lista {
+    gap: 10px;
+    max-width: 98vw;
+  }
+  .usuarios-title {
+    font-size: 1.2rem;
+  }
+}

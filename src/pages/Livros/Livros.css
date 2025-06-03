@@ -105,6 +105,7 @@
   align-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  margin-bottom: 5%;
 }
 
 .livro-card:hover {

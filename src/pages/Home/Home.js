@@ -143,15 +143,13 @@ function Home() {
       <div className="autores-section">
         <h2 style={{ fontWeight: 600, fontSize: 22, marginBottom: 24 }}>Autores</h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24, overflowX: 'auto' }}>
-          {isAdmin && (
+          {isAdmin && !showModal && (
             <div
               className="autor-card add-autor"
               onClick={() => setShowModal(true)}
               title="Adicionar autor"
             >
-              <div className="autor-foto">
-                <FiPlus size={36} />
-              </div>
+              <FiPlus size={48} color="#c62828" />
             </div>
           )}
           {autoresArray.map((autor, idx) => (

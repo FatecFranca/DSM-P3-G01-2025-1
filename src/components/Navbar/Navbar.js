@@ -33,6 +33,18 @@ export function Navbar() {
         navigate('/login');
     };
 
+    // Verifica se o usuário é admin
+    const adminEmails = [
+        'anajuliaalvesmota@gmail.com',
+        'lauanegabtoledo@gmail.com',
+        'miguelsoares3005@gmail.com',
+        'gabrielferrarez77@gmail.com',
+        'pedrohcsilva77@gmail.com'
+    ];
+    let usuarioEmail = localStorage.getItem('userEmail') || localStorage.getItem('usuarioEmail') || localStorage.getItem('email');
+    usuarioEmail = usuarioEmail ? usuarioEmail.trim().toLowerCase() : '';
+    const isAdmin = adminEmails.includes(usuarioEmail);
+
     return (
         <nav className="navbar">
             <div className="navbar-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
@@ -42,11 +54,14 @@ export function Navbar() {
                 <div className="navbar-search">
                     <input type="text" placeholder="Pesquisar..." />
                 </div>
-                <ul className="navbar-links" style={{ flex: 1, display: 'flex', justifyContent: 'center', marginLeft: 0, marginRight: 0 }}>
+                <ul className="navbar-links" style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 0, padding: 0 }}>
                     <li><a href="/">Home</a></li>
                     <li><a href="/livros">Livros</a></li>
                     <li><a href="/literatura-brasileira">Literatura Brasileira</a></li>
                     <li><a href="/sobre">Sobre nós</a></li>
+                    {isAdmin && (
+                        <li><a href="/dashboard">Dashboard</a></li>
+                    )}
                 </ul>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
