@@ -7,7 +7,7 @@ import Sobre from '../src/pages/Sobre/Sobre.js';
 import Livros from '../src/pages/Livros/Livros.js'
 import NovoLivro from './pages/NovoLivro/NovoLivro.js';
 import DetalheLivro from './pages/Livros/DetalheLivro.js';
-import ConfirmacaoCompra from './pages/ConfirmarCompras/ConfirmarCompras.js';
+import ConfirmarCompras from './pages/ConfirmarCompras/ConfirmarCompras.js';
 import 'flowbite/dist/flowbite.css';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -16,6 +16,8 @@ import Carrinho from '../src/pages/Carrinho/Carrinho';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Autores from './pages/Autores/Autores';
 import Usuarios from './pages/Usuarios/Usuarios';
+import ComprarAgora from './pages/ComprarAgora/comprar';
+import EnderecoComprar from './pages/EnderecoComprar/endereco';
 
 
 function App() {
@@ -30,8 +32,10 @@ function App() {
                 <Route path="/sobre" element={<Sobre/>} />
                 <Route path="/literatura-brasileira" element={<LiteraturaBrasileira />} />
                 <Route path="/novo-livro" element={<NovoLivro />} />
-                <Route path="/comprar" element={<div style={{padding: 40, textAlign: 'center'}}>Tela de compra (em branco)</div>} />
+                <Route path="/comprar" element={<ComprarAgora/>} />
                 <Route path="/carrinho" element={<Carrinho />} />
+                <Route path="/endereco" element={<EnderecoComprar />} />
+                <Route path="/confirmar-compra" element={<ConfirmarCompras />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/autores" element={<Autores />} />
                 <Route path="/usuarios" element={<Usuarios />} />

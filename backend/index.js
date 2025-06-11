@@ -225,3 +225,134 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+// Rota para adicionar item ao carrinho (simulado)
+let carrinho = {};
+
+app.post('/api/carrinho', async (req, res) => {
+  try {
+    const { clienteId, livroId, quantidade } = req.body;
+    
+    if (!carrinho[clienteId]) {
+      carrinho[clienteId] = [];
+    }
+    
+    // Verifica se o livro já está no carrinho
+    const itemExistente = carrinho[clienteId].find(item => item.livroId === livroId);
+    
+    if (itemExistente) {
+      itemExistente.quantidade += parseInt(quantidade) || 1;
+    } else {
+      // Busca o livro para pegar o preço
+      const livro = await prisma.livros.findUnique({ where: { id: livroId } });
+      if (!livro) return res.status(404).json({ error: 'Livro não encontrado' });
+      
+      carrinho[clienteId].push({
+        livroId,
+        quantidade: parseInt(quantidade) || 1,
+        precoUnitario: livro.preco,
+        titulo: livro.titulo,
+        capa: livro.capa
+      });
+    }
+    
+    res.json(carrinho[clienteId]);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao atualizar carrinho', details: error.message });
+  }
+});
+
+// Rota para ver carrinho
+app.get('/api/carrinho', async (req, res) => {
+  const { clienteId } = req.query;
+  if (!clienteId) return res.status(400).json({ error: 'ID do cliente é obrigatório' });
+  
+  res.json(carrinho[clienteId] || []);
+});
+
+// Rota para finalizar pedido
+app.post('/api/pedidos', async (req, res) => {
+  try {
+    const { clienteId, metodoPagamento } = req.body;
+    
+    if (!carrinho[clienteId] || carrinho[clienteId].length === 0) {
+      return res.status(400).json({ error: 'Carrinho vazio' });
+    }
+    
+    // Calcula o total
+    const total = carrinho[clienteId].reduce(
+      (sum, item) => sum + (item.precoUnitario * item.quantidade), 0
+    );
+    
+    // Cria o pedido no banco de dados
+    const pedido = await prisma.pedidos.create({
+      data: {
+        clienteId,
+        metodoPagamento,
+        total,
+        status: 'pendente',
+        itens: {
+          create: carrinho[clienteId].map(item => ({
+            livroId: item.livroId,
+            quantidade: item.quantidade,
+            precoUnitario: item.precoUnitario
+          }))
+        }
+      },
+      include: {
+        itens: {
+          include: {
+            livro: true
+          }
+        },
+        cliente: true
+      }
+    });
+    
+    // Atualiza estoque dos livros
+    for (const item of carrinho[clienteId]) {
+      await prisma.livros.update({
+        where: { id: item.livroId },
+        data: {
+          quantidade: {
+            decrement: item.quantidade
+          }
+        }
+      });
+    }
+    
+    // Limpa o carrinho
+    delete carrinho[clienteId];
+    
+    res.status(201).json(pedido);
+  } catch (error) {
+    console.error('Erro ao criar pedido:', error);
+    res.status(500).json({ error: 'Erro ao finalizar pedido', details: error.message });
+  }
+});
+
+// Rota para listar pedidos do cliente
+app.get('/api/pedidos', async (req, res) => {
+  const { clienteId } = req.query;
+  if (!clienteId) return res.status(400).json({ error: 'ID do cliente é obrigatório' });
+  
+  try {
+    const pedidos = await prisma.pedidos.findMany({
+      where: { clienteId },
+      include: {
+        itens: {
+          include: {
+            livro: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+    
+    res.json(pedidos);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar pedidos', details: error.message });
+  }
+});

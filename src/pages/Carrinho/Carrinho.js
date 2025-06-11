@@ -10,12 +10,16 @@ const Carrinho = () => {
     const [cartItems, setCartItems] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const savedCart = localStorage.getItem('carrinho');
-        if (savedCart) {
-            setCartItems(JSON.parse(savedCart));
-        }
-    }, []);
+useEffect(() => {
+    const savedCart = localStorage.getItem('carrinho');
+    if (savedCart) {
+        const parsedCart = JSON.parse(savedCart).map(item => ({
+            ...item,
+            preco: parseFloat(item.preco)
+        }));
+        setCartItems(parsedCart);
+    }
+}, []);
 
     const updateQuantity = (index, newQuantity) => {
         if (newQuantity < 1) return;
@@ -33,11 +37,12 @@ const Carrinho = () => {
         localStorage.setItem('carrinho', JSON.stringify(newCartItems));
     };
 
-    const calculateTotal = () => {
-        return cartItems
-            .reduce((total, item) => total + item.preco * item.quantidade, 0)
-            .toFixed(2);
-    };
+const calculateTotal = () => {
+    return cartItems
+        .reduce((total, item) => total + parseFloat(item.preco) * item.quantidade, 0)
+        .toFixed(2);
+};
+
 
     const handleCheckout = () => {
         navigate('/comprar');
@@ -105,7 +110,7 @@ const Carrinho = () => {
                                         <div className="item-details">
                                             <h3>{item.titulo}</h3>
                                             <p className="autor">{item.autor}</p>
-                                            <p className="preco">R$ {item.preco.toFixed(2)}</p>
+                                            <p className="preco">R$ {parseFloat(item.preco).toFixed(2)}</p>
 
                                             <div className="quantity-control">
                                                 <button
