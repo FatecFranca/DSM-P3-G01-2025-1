@@ -18,6 +18,7 @@ import Autores from './pages/Autores/Autores';
 import Usuarios from './pages/Usuarios/Usuarios';
 import ComprarAgora from './pages/ComprarAgora/comprar';
 import EnderecoComprar from './pages/EnderecoComprar/endereco';
+import EsqueciSenha from './pages/EsqueciSenha/esquecisenha.js';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/" element={<Home />} /> 
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
+                <Route path="/esqueci-senha" element={<EsqueciSenha />} />
                 <Route path="/livros" element={<Livros />} /> 
                 <Route path="/livros/:id" element={<DetalheLivro />} />
                 <Route path="/sobre" element={<Sobre/>} />

@@ -1,0 +1,131 @@
+
+.esqueci-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px); 
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+/* Cartão do formulário */
+.esqueci-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+/* Logo */
+.esqueci-logo {
+    width: 120px;
+    margin-bottom: 1.5rem;
+}
+
+/* Título */
+.esqueci-titulo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.8rem;
+}
+
+/* Grupos de input */
+.esqueci-input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.esqueci-input-label {
+    display: block;
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.esqueci-input-field {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s;
+    background-color: #f9f9f9;
+}
+
+.esqueci-input-field:focus {
+    border-color: #ffde59;
+    box-shadow: 0 0 0 3px rgba(255, 222, 89, 0.2);
+    outline: none;
+    background-color: white;
+}
+
+/* Botão principal */
+.esqueci-submit-btn {
+    width: 100%;
+    background-color: #ffde59;
+    color: #292626;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.esqueci-submit-btn:hover {
+    background-color: #f8d347;
+    transform: translateY(-2px);
+}
+
+.esqueci-submit-btn:active {
+    transform: translateY(0);
+}
+
+.esqueci-error {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Link de voltar */
+.esqueci-voltar {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.esqueci-voltar:hover {
+    color: #ffde59;
+    text-decoration: underline;
+}
+
+.etapa-transition {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+    .esqueci-card {
+        padding: 1.5rem;
+    }
+    
+    .esqueci-titulo {
+        font-size: 1.3rem;
+    }
+}

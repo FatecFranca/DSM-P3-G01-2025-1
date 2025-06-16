@@ -76,7 +76,7 @@ const Login = () => {
                             </div>
 
                             <div className="login-esqueci-senha">
-                                <p><Link to="/">Esqueci minha senha</Link></p>
+                                <p><Link to="/esqueci-senha">Esqueci minha senha</Link></p>
                             </div>
 
                             <button

@@ -12,11 +12,11 @@ model avaliacoes {
 }
 
 model clientes {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
   nome        String
-  email       String
+  email       String @unique
   senha       String
-  cpf         String
+  cpf         String @unique
   logradouro  String
   num_casa    String
   complemento String
@@ -26,43 +26,43 @@ model clientes {
   cep         String
   celular     String
 
-  pedidos     pedidos[]  
+  pedidos pedidos[]
 }
 
 model livros {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  titulo      String
-  autor       String
-  editora     String
-  isbn        String
-  ano         Int
-  genero      String
-  preco       Float
-  quantidade  Int
-  sinopse     String
-  capa        String
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  titulo     String
+  autor      String
+  editora    String
+  isbn       String
+  ano        Int
+  genero     String
+  preco      Float
+  quantidade Int
+  sinopse    String
+  capa       String
 
-  pedidos     pedidos[]  
+  itens ItemPedido[] // Relação com ItemPedido
 }
 
 model pedidos {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  clienteId  String    @db.ObjectId
-  cliente    clientes  @relation(fields: [clienteId], references: [id])
-  itens      ItemPedido[]
-  status     String    @default("pendente") // pendente, pago, enviado, entregue, cancelado
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  clienteId       String       @db.ObjectId
+  cliente         clientes     @relation(fields: [clienteId], references: [id])
+  itens           ItemPedido[]
+  status          String       @default("pendente") // pendente, pago, enviado, entregue, cancelado
   metodoPagamento String
-  total      Float
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  total           Float
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 }
 
 model ItemPedido {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  pedidoId  String   @db.ObjectId
-  pedido    pedidos  @relation(fields: [pedidoId], references: [id])
-  livroId   String   @db.ObjectId
-  livro     livros   @relation(fields: [livroId], references: [id])
-  quantidade Int
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  pedidoId      String  @db.ObjectId
+  pedido        pedidos @relation(fields: [pedidoId], references: [id])
+  livroId       String  @db.ObjectId
+  livro         livros  @relation(fields: [livroId], references: [id])
+  quantidade    Int
   precoUnitario Float
 }

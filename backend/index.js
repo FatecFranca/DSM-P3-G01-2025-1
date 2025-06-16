@@ -356,3 +356,59 @@ app.get('/api/pedidos', async (req, res) => {
     res.status(500).json({ error: 'Erro ao buscar pedidos', details: error.message });
   }
 });
+
+// Rota para verificar e-mail + CPF
+app.post('/api/verificar-dados-recuperacao', async (req, res) => {
+    const { email, cpf } = req.body;
+
+    try {
+        const user = await prisma.clientes.findFirst({
+            where: {
+                email,
+                cpf
+            }
+        });
+
+        if (!user) {
+            return res.status(400).json({ error: 'Dados inválidos' });
+        }
+
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Erro na verificação' });
+    }
+});
+
+
+app.post('/api/redefinir-senha', async (req, res) => {
+  const { email, novaSenha } = req.body;
+  
+  try {
+    console.log("Dados recebidos:", { email, novaSenha });
+
+    if (!novaSenha || novaSenha.length < 6) {
+      return res.status(400).json({ error: "Senha deve ter pelo menos 6 caracteres" });
+    }
+
+    const user = await prisma.clientes.findFirst({
+      where: { email }
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    await prisma.clientes.update({
+      where: { id: user.id }, 
+      data: { senha: novaSenha }
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Erro detalhado:", error);
+    res.status(500).json({ 
+      error: "Erro ao redefinir senha",
+      details: error.message 
+    });
+  }
+});
