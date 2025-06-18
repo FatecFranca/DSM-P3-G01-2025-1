@@ -12,6 +12,9 @@ Nosso sistema tem como objetivo criar um ecossistema literário inovador, oferec
 ## Portfólio
 [Acesse o protótipo do BookHub](https://www.canva.com/design/DAGqiIytA9o/ecBW-R-wmg_37KWDgshgZQ/edit?utm_content=DAGqiIytA9o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
+## Documentação
+[Acesse a documentação do BookHub](https://docs.google.com/document/d/1MnmZDVGVgtD7c5VnlazsQeKT7jDcesN7RAnlOQRpZlM/edit?usp=sharing)
+
 ## 🛠️ Tecnologias Utilizadas
 
 ### ⚛️ Frontend
