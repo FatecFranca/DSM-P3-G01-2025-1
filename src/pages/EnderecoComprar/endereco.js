@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { Faixa } from '../../components/Faixa/Faixa';
 import './endereco.css';
@@ -31,8 +30,25 @@ const Endereco = () => {
     }
   }, [navigate]);
 
+  // Função para formatar CEP (igual Cadastro.js)
+  const formatCEP = (value) => {
+    value = value.replace(/\D/g, '');
+    value = value.slice(0, 8);
+    if (value.length > 5) {
+      value = value.replace(/^(\d{5})(\d{1,3})/, '$1-$2');
+    }
+    return value;
+  };
+
   const handleChange = (e) => {
-    setAddress({ ...address, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    let formattedValue = value;
+    if (name === 'cep') {
+      formattedValue = formatCEP(value);
+    } else if (name === 'estado') {
+      formattedValue = value.toUpperCase();
+    }
+    setAddress({ ...address, [name]: formattedValue });
   };
 
   const handleSubmit = async (e) => {
@@ -88,7 +104,7 @@ const Endereco = () => {
               </label>
             </div>
 
-            <div className="form-row">
+            <div className="form-row-duo rua-cep">
               <label>
                 Rua
                 <input 
@@ -99,10 +115,23 @@ const Endereco = () => {
                   required 
                 />
               </label>
+              
+              <label>
+                CEP
+                <input 
+                  type="text" 
+                  name="cep" 
+                  value={address.cep} 
+                  onChange={handleChange} 
+                  required 
+                  pattern="\d{5}-?\d{3}"
+                  placeholder="00000-000"
+                />
+              </label>
             </div>
 
             <div className="form-row-duo">
-              <label>
+              <label className="numero-label">
                 Número
                 <input 
                   type="text" 
@@ -120,6 +149,7 @@ const Endereco = () => {
                   name="complemento" 
                   value={address.complemento} 
                   onChange={handleChange} 
+                  required 
                 />
               </label>
             </div>
@@ -136,7 +166,7 @@ const Endereco = () => {
                 />
               </label>
 
-              <label>
+              <label className="estado-label">
                 Estado
                 <input 
                   type="text" 
@@ -146,21 +176,6 @@ const Endereco = () => {
                   required 
                   maxLength="2"
                   placeholder="SP"
-                />
-              </label>
-            </div>
-
-            <div className="form-row">
-              <label>
-                CEP
-                <input 
-                  type="text" 
-                  name="cep" 
-                  value={address.cep} 
-                  onChange={handleChange} 
-                  required 
-                  pattern="\d{5}-?\d{3}"
-                  placeholder="00000-000"
                 />
               </label>
             </div>
@@ -176,7 +191,7 @@ const Endereco = () => {
         </div>
       </main>
       
-      <Footer />
+      
     </div>
   );
 };

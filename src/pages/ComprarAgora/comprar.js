@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Footer from '../../components/Footer/Footer';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { Faixa } from '../../components/Faixa/Faixa';
 import './comprar.css';
@@ -172,7 +171,7 @@ const Comprar = () => {
         </div>
       </main>
       
-      <Footer />
+      
     </div>
   );
 };

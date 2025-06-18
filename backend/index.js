@@ -221,6 +221,17 @@ app.delete('/api/livros/:id', async (req, res) => {
   }
 });
 
+// Remover autor
+app.delete('/api/autores/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.autor.delete({ where: { id } });
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao excluir autor', details: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

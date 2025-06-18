@@ -141,8 +141,6 @@ const ConfirmarCompras = () => {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
 };
