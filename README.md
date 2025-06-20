@@ -6,11 +6,8 @@
 ## 🎯 Objetivos
 Nosso sistema tem como objetivo criar um ecossistema literário inovador, oferecendo uma plataforma segura e intuitiva para compra e venda de livros. A experiência do usuário é personalizada, com filtros avançados que facilitam a busca por exemplares raros e recomendados. Para administradores, o sistema conta com um dashboard prático para gestão de produtos e análise de desempenho. Assim, o BookHub conecta leitores e livrarias, promovendo a leitura de forma tecnológica e acessível.
 
-## Prototipagem
-[Acesse o protótipo do BookHub](https://www.canva.com/design/DAGfsJN_7oI/Ol_XmE8C8-ogNmike_4QkQ/edit?utm_content=DAGfsJN_7oI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
-
-## Portfólio
-[Acesse o protótipo do BookHub](https://www.canva.com/design/DAGqiIytA9o/ecBW-R-wmg_37KWDgshgZQ/edit?utm_content=DAGqiIytA9o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+## Portfólio Completo (Com Prototipagem)
+Acesse o arquivo "Portfólio BookHub" na pasta "docs" na raiz do repositório.
 
 ## Documentação
 [Acesse a documentação do BookHub](https://docs.google.com/document/d/1MnmZDVGVgtD7c5VnlazsQeKT7jDcesN7RAnlOQRpZlM/edit?usp=sharing)
