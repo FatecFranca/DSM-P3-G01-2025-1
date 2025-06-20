@@ -15,6 +15,9 @@ Nosso sistema tem como objetivo criar um ecossistema literário inovador, oferec
 ## Documentação
 [Acesse a documentação do BookHub](https://docs.google.com/document/d/1MnmZDVGVgtD7c5VnlazsQeKT7jDcesN7RAnlOQRpZlM/edit?usp=sharing)
 
+## Elevator Pitch
+[Acesse o Elevator Pitch do BookHub](https://youtu.be/w8vpkqwzoDc)
+
 ## 🛠️ Tecnologias Utilizadas
 
 ### ⚛️ Frontend
